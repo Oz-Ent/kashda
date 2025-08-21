@@ -1,0 +1,316 @@
+{
+    "user": {
+        "name": "Kwakye",
+        "email": "kwakye@example.com",
+        "phone": "+233 24 123 4567",
+        "role": "User",
+        "avatar": "https://placehold.co/40x40/6a0dad/e0e0e0?text=K"
+    },
+    "wallets": [
+        {
+            "id": "main",
+            "type": "Main Wallet",
+            "balance": 8500.00,
+            "currency": "GHS",
+            "isVisible": true,
+            "color": "#d4af37"
+        },
+        {
+            "id": "atm",
+            "type": "ATM Card",
+            "balance": 1500.00,
+            "currency": "GHS",
+            "isVisible": true,
+            "color": "#6a0dad"
+        }
+    ],
+    "transactions": [
+        {
+            "id": "1",
+            "date": "2025-07-18",
+            "description": "Online Store Purchase",
+            "category": "Shopping",
+            "amount": -150.00,
+            "currency": "GHS",
+            "status": "Successful",
+            "transactionType": "send",
+            "recipient": "Amazon Store",
+            "reference": "TXN001"
+        },
+        {
+            "id": "2",
+            "date": "2025-07-17",
+            "description": "Received from John Doe",
+            "category": "Income",
+            "amount": 500.00,
+            "currency": "GHS",
+            "status": "Successful",
+            "transactionType": "receive",
+            "sender": "John Doe",
+            "reference": "TXN002"
+        },
+        {
+            "id": "3",
+            "date": "2025-07-16",
+            "description": "Utility Bill Payment",
+            "category": "Bills",
+            "amount": -75.00,
+            "currency": "GHS",
+            "status": "Successful",
+            "transactionType": "send",
+            "recipient": "ECG Ghana",
+            "reference": "TXN003"
+        },
+        {
+            "id": "4",
+            "date": "2025-07-15",
+            "description": "Salary Payment",
+            "category": "Income",
+            "amount": 2500.00,
+            "currency": "GHS",
+            "status": "Successful",
+            "transactionType": "receive",
+            "sender": "Tech Corp Ghana",
+            "reference": "TXN004"
+        },
+        {
+            "id": "5",
+            "date": "2025-07-14",
+            "description": "Grocery Store",
+            "category": "Food",
+            "amount": -120.00,
+            "currency": "GHS",
+            "status": "Successful",
+            "transactionType": "send",
+            "recipient": "ShopRite",
+            "reference": "TXN005"
+        },
+        {
+            "id": "6",
+            "date": "2025-07-13",
+            "description": "Fuel Purchase",
+            "category": "Transport",
+            "amount": -200.00,
+            "currency": "GHS",
+            "status": "Successful",
+            "transactionType": "send",
+            "recipient": "Shell Station",
+            "reference": "TXN006"
+        }
+    ],
+    "pension": {
+        "subscriptionStatus": "Active",
+        "monthlyPayment": "Paid for July",
+        "contributions": [
+            {
+                "month": "July 2025",
+                "amount": 250.00,
+                "status": "Paid",
+                "date": "2025-07-01"
+            },
+            {
+                "month": "June 2025",
+                "amount": 250.00,
+                "status": "Paid",
+                "date": "2025-06-01"
+            },
+            {
+                "month": "May 2025",
+                "amount": 250.00,
+                "status": "Paid",
+                "date": "2025-05-01"
+            }
+        ],
+        "totalContributions": 3000.00,
+        "estimatedRetirementBenefit": 50000.00
+    },
+    "insurance": {
+        "plans": [
+            {
+                "id": "health",
+                "name": "Health Protection Plan",
+                "premium": 150.00,
+                "coverage": 50000.00,
+                "status": "Active",
+                "nextPayment": "2025-08-15"
+            },
+            {
+                "id": "motor",
+                "name": "Motor Vehicle Insurance",
+                "premium": 200.00,
+                "coverage": 25000.00,
+                "status": "Active",
+                "nextPayment": "2025-08-20"
+            }
+        ],
+        "availablePlans": [
+            {
+                "id": "life",
+                "name": "Life Insurance",
+                "premium": 300.00,
+                "coverage": 100000.00,
+                "description": "Comprehensive life insurance coverage"
+            },
+            {
+                "id": "property",
+                "name": "Property Insurance",
+                "premium": 250.00,
+                "coverage": 75000.00,
+                "description": "Protection for your property and belongings"
+            }
+        ]
+    },
+    "revenue": {
+        "paidAmount": 0.00,
+        "outstandingAmount": 150.00,
+        "outstandingDescription": "Property Tax",
+        "paymentHistory": [
+            {
+                "date": "2025-06-15",
+                "description": "Income Tax",
+                "amount": 500.00,
+                "status": "Paid"
+            },
+            {
+                "date": "2025-05-15",
+                "description": "Business License",
+                "amount": 100.00,
+                "status": "Paid"
+            }
+        ]
+    },
+    "savings": {
+        "goals": [
+            {
+                "id": "emergency",
+                "name": "Emergency Fund",
+                "targetAmount": 10000.00,
+                "currentAmount": 3500.00,
+                "targetDate": "2025-12-31",
+                "category": "Emergency"
+            },
+            {
+                "id": "vacation",
+                "name": "Vacation Fund",
+                "targetAmount": 5000.00,
+                "currentAmount": 1200.00,
+                "targetDate": "2025-08-15",
+                "category": "Travel"
+            },
+            {
+                "id": "car",
+                "name": "New Car",
+                "targetAmount": 25000.00,
+                "currentAmount": 8000.00,
+                "targetDate": "2026-06-30",
+                "category": "Purchase"
+            }
+        ],
+        "totalSavings": 12700.00,
+        "monthlyContribution": 500.00
+    },
+    "investments": {
+        "portfolio": [
+            {
+                "id": "stocks",
+                "name": "Ghana Stock Exchange",
+                "amount": 5000.00,
+                "returns": 12.5,
+                "type": "Stocks",
+                "risk": "Medium"
+            },
+            {
+                "id": "bonds",
+                "name": "Government Bonds",
+                "amount": 8000.00,
+                "returns": 8.2,
+                "type": "Bonds",
+                "risk": "Low"
+            },
+            {
+                "id": "mutual",
+                "name": "Mutual Funds",
+                "amount": 3000.00,
+                "returns": 15.8,
+                "type": "Mutual Funds",
+                "risk": "High"
+            }
+        ],
+        "totalInvestments": 16000.00,
+        "totalReturns": 11.8,
+        "availableInvestments": [
+            {
+                "id": "treasury",
+                "name": "Treasury Bills",
+                "minimumAmount": 1000.00,
+                "expectedReturns": 6.5,
+                "risk": "Very Low",
+                "duration": "91 days"
+            },
+            {
+                "id": "real-estate",
+                "name": "Real Estate Fund",
+                "minimumAmount": 10000.00,
+                "expectedReturns": 18.5,
+                "risk": "Medium",
+                "duration": "5 years"
+            }
+        ]
+    },
+    "groups": [
+        {
+            "id": 1,
+            "name": "Project Team Lunch",
+            "users": [
+                {
+                    "name": "Alice",
+                    "identifier": "alice@example.com",
+                    "amount": 50
+                },
+                {
+                    "name": "Bob",
+                    "identifier": "+23324111222",
+                    "amount": 50
+                }
+            ],
+            "totalAmount": 100
+        },
+        {
+            "id": 2,
+            "name": "Family Bills",
+            "users": [
+                {
+                    "name": "Charlie",
+                    "identifier": "charlie@example.com",
+                    "amount": 200
+                },
+                {
+                    "name": "Diana",
+                    "identifier": "diana@example.com",
+                    "amount": 150
+                }
+            ],
+            "totalAmount": 350
+        }
+    ],
+    "settings": {
+        "notifications": {
+            "email": true,
+            "sms": true,
+            "push": true,
+            "transactionAlerts": true,
+            "paymentReminders": true
+        },
+        "security": {
+            "twoFactorAuth": true,
+            "biometricAuth": false,
+            "sessionTimeout": 30
+        },
+        "preferences": {
+            "currency": "GHS",
+            "language": "English",
+            "theme": "Dark",
+            "dateFormat": "DD/MM/YYYY"
+        }
+    }
+}
