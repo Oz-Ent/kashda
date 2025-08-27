@@ -2,26 +2,26 @@
 
 import React from "react";
 
-interface Column {
+interface Column<T = Record<string, unknown>> {
   key: string;
   title: string;
-  render?: (value: any, row: any) => React.ReactNode;
+  render?: (value: unknown, row: T) => React.ReactNode;
   className?: string;
 }
 
-interface DataTableProps {
-  columns: Column[];
-  data: any[];
+interface DataTableProps<T = Record<string, unknown>> {
+  columns: Column<T>[];
+  data: T[];
   emptyMessage?: string;
   className?: string;
 }
 
-const DataTable: React.FC<DataTableProps> = ({
+const DataTable = <T extends Record<string, unknown>>({
   columns,
   data,
   emptyMessage = "No data available",
   className = "",
-}) => {
+}: DataTableProps<T>) => {
   if (data.length === 0) {
     return (
       <div className="text-center py-8">
@@ -58,10 +58,9 @@ const DataTable: React.FC<DataTableProps> = ({
                   key={column.key}
                   className={`py-3 px-4 text-sm ${column.className || ""}`}
                 >
-                  {column.render 
+                  {column.render
                     ? column.render(row[column.key], row)
-                    : row[column.key]
-                  }
+                    : String(row[column.key] || "")}
                 </td>
               ))}
             </tr>

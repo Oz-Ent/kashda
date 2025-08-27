@@ -17,13 +17,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Login from "./components/forms/Login";
 import Modal from "./components/ui/Modal";
 import SignUp from "./components/forms/SignUp";
+
 export default function HomePage() {
   // const { redirect } = useStaticRedirect();
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
+  const router = useRouter();
 
   const handleLoginClick = () => {
     // redirect("/login");
@@ -38,6 +41,16 @@ export default function HomePage() {
   const handleGetStartedClick = () => {
     // redirect("/signup");
     setShowSignup(true);
+  };
+
+  const handleSignupSuccess = () => {
+    setShowSignup(false);
+    // Add a small delay to ensure auth state is properly set
+    setTimeout(() => {
+      console.log("Modal: Redirecting to KYC...");
+      // Use Next.js router for proper navigation
+      router.push("/kyc");
+    }, 500); // 500ms delay
   };
 
   return (
@@ -86,7 +99,7 @@ export default function HomePage() {
           <div className="flex items-center space-x-4">
             <button
               onClick={handleLoginClick}
-              className="bg-[#4a007a] text-[#e0e0e0] border border-[#4a007a] px-5 py-2 rounded-lg font-semibold shadow-md hover:bg-[#6a0dad] transition-colors duration-200 focus:outline-none hidden md:block"
+              className="bg-[#4a007a] text-[#e0e0e0] border border-[#4a007a] px-5 py-2 rounded-lg font-semibold shadow-md hover:bg-[#6a0dad] transition-colors duration-200 focus:outline-none"
             >
               Login
             </button>
@@ -106,7 +119,7 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-[#3a005f] to-[#2a004a] text-center py-20 md:py-32 flex items-center justify-center">
-        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+        <div className="absolute inset-0 bg-[#2a004ab6] bg-opacity-60"></div>
         <div className="relative z-10 text-white px-4 max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6 text-[#d4af37]">
             Empowering Your Financial Journey
@@ -303,9 +316,7 @@ export default function HomePage() {
             setShowSignup(false);
             setShowLogin(true);
           }}
-          onSuccess={() => {
-            setShowSignup(false);
-          }}
+          onSuccess={handleSignupSuccess}
         />
       </Modal>
     </div>

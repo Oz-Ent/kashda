@@ -63,13 +63,30 @@ const BalanceCarousel: React.FC<BalanceCarouselProps> = ({
           <>
             <button
               onClick={scrollLeft}
-              className="absolute top-1/2 transform -translate-y-1/2 left-0 bg-gray-800/50 hover:bg-gray-700/70 text-white p-2 rounded-full shadow-lg z-10 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              className="absolute top-1/2 transform -translate-y-1/2 left-0 bg-gray-800/50 hover:bg-gray-700/70 text-white p-2 rounded-full shadow-lg z-10 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 hidden md:block"
             >
               <FontAwesomeIcon icon={faChevronLeft} />
             </button>
             <button
               onClick={scrollRight}
-              className="absolute top-1/2 transform -translate-y-1/2 right-0 bg-gray-800/50 hover:bg-gray-700/70 text-white p-2 rounded-full shadow-lg z-10 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              className="absolute top-1/2 transform -translate-y-1/2 right-0 bg-gray-800/50 hover:bg-gray-700/70 text-white p-2 rounded-full shadow-lg z-10 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 hidden md:block"
+            >
+              <FontAwesomeIcon icon={faChevronRight} />
+            </button>
+          </>
+        )}
+
+        {wallets.length > 1 && (
+          <>
+            <button
+              onClick={scrollLeft}
+              className="absolute top-1/2 transform -translate-y-1/2 left-0 bg-gray-800/50 hover:bg-gray-700/70 text-white p-2 rounded-full shadow-lg z-10 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 md:hidden"
+            >
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </button>
+            <button
+              onClick={scrollRight}
+              className="absolute top-1/2 transform -translate-y-1/2 right-0 bg-gray-800/50 hover:bg-gray-700/70 text-white p-2 rounded-full shadow-lg z-10 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 md:hidden"
             >
               <FontAwesomeIcon icon={faChevronRight} />
             </button>

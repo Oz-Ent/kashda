@@ -1,88 +1,73 @@
 "use client";
 
 import React from "react";
-import { useStaticRedirect } from "@/lib/staticRedirect";
+import { redirect, useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import SignupForm from "../components/forms/SignUp";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const SignupPage = () => {
-  const { redirect } = useStaticRedirect();
+  const router = useRouter();
+  const { user, userProfile, loading } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // In a real app, you'd handle user registration here.
-    // For now, we'll just redirect to the KYC page.
-    redirect("/kyc");
-  };
+  // If user is already authenticated and has completed KYC, redirect to dashboard
+  if (user && !loading && userProfile?.kycCompleted) {
+    router.push("/dashboard");
+    return null;
+  }
+
+  // If user is already authenticated but needs KYC, redirect to KYC
+  if (user && !loading && userProfile && !userProfile.kycCompleted) {
+    router.push("/kyc");
+    return null;
+  }
+
+  // If user is already authenticated, show loading
+  if (user && !loading) {
+    return (
+      <div className="flex justify-center items-center h-screen py-2 bg-[#2a004a]">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-[#d4af37] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-[#e0e0e0] text-lg">Setting up your account...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="px-8 py-6 mt-4 text-left bg-white shadow-lg rounded-lg w-full max-w-md">
-        <h3 className="text-2xl font-bold text-center">Create an account</h3>
-        <form onSubmit={handleSubmit}>
-          <div className="mt-4">
-            <div>
-              <label className="block" htmlFor="name">
-                Name
-              </label>
-              <input
-                type="text"
-                placeholder="Name"
-                id="name"
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-              />
-            </div>
-            <div className="mt-4">
-              <label className="block" htmlFor="email">
-                Email
-              </label>
-              <input
-                type="email"
-                placeholder="Email"
-                id="email"
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-              />
-            </div>
-            <div className="mt-4">
-              <label className="block" htmlFor="password">
-                Password
-              </label>
-              <input
-                type="password"
-                placeholder="Password"
-                id="password"
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-              />
-            </div>
-            <div className="mt-4">
-              <label className="block" htmlFor="confirm-password">
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                id="confirm-password"
-                className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-              />
-            </div>
-            <div className="flex items-baseline justify-between">
-              <button
-                type="submit"
-                className="px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900"
-              >
-                Sign Up
-              </button>
-            </div>
-            <div className="mt-6 text-grey-dark">
-              Already have an account?
-              <button
-                type="button"
-                onClick={() => redirect("/login")}
-                className="text-blue-600 hover:underline ml-1"
-              >
-                Login
-              </button>
-            </div>
-          </div>
-        </form>
+    <div className="flex justify-center items-center h-full lg:h-screen py-2 bg-[#2a004a]">
+      <div className="text-center">
+        <button
+          className=" absolute top-4 left-4  gap-2 p-3 rounded-lg items-center justify-center space-x-3 font-semibold shadow-md hover:scale-105 transition-transform duration-300 focus:outline-none bg-[#4a007a] text-[#e0e0e0] border border-[#4a007a] hover:bg-[#6a0dad] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 hidden md:flex  "
+          onClick={() => {
+            redirect("/");
+          }}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+          Return to Home
+        </button>
+        <SignupForm
+          onSwitchToLogin={() => {
+            router.push("/login");
+          }}
+          onSuccess={() => {
+            console.log("Signup successful, redirecting to KYC...");
+            setTimeout(() => {
+              console.log("Attempting redirect to KYC...");
+              try {
+                router.push("/kyc");
+              } catch (error) {
+                console.error(
+                  "Router redirect failed, using window.location:",
+                  error
+                );
+                // Fallback: use window.location if router fails
+                window.location.href = "/kyc";
+              }
+            }, 500); // 500ms delay
+          }}
+        />
       </div>
     </div>
   );

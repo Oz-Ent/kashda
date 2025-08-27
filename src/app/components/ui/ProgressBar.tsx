@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { formatCurrency } from "@/lib/formatUtils";
 
 interface ProgressBarProps {
   current: number;
@@ -19,19 +20,11 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   height = "h-3",
   showPercentage = true,
   showAmounts = false,
-  currency = "GHS",
+  currency = "GH₵",
   className = "",
   gradient = false,
 }) => {
   const percentage = Math.min((current / target) * 100, 100);
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-GH", {
-      style: "currency",
-      currency: currency,
-      minimumFractionDigits: 2,
-    }).format(amount);
-  };
 
   const progressBarClass = gradient
     ? "bg-gradient-to-r from-[#6a0dad] to-[#d4af37]"
@@ -57,7 +50,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
       {showPercentage && (
         <div className="flex justify-between text-sm">
-          <span className="text-[#a0a0a0]">{percentage.toFixed(1)}% complete</span>
+          <span className="text-[#a0a0a0]">
+            {percentage.toFixed(1)}% complete
+          </span>
         </div>
       )}
     </div>

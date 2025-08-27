@@ -94,3 +94,4 @@ export const IndividualForm = ({ onSubmit }: IndividualFormProps) => {
     </form>
   );
 };
+

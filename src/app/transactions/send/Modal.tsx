@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { formatCurrency } from "@/lib/formatUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,7 +13,7 @@ interface ModalContainerProps {
 const ModalContainer = ({ children, onClose }: ModalContainerProps) => {
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 opacity-100 visible transition-opacity duration-300"
+      className="fixed inset-0 bg-[#2a004ab6] bg-opacity-70 flex justify-center items-center z-50 opacity-100 visible transition-opacity duration-300"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onClose();
@@ -48,7 +49,7 @@ const Confirm = ({ amount, onConfirm, onCancel }: ConfirmProps) => {
         <div>
           <p className="text-sm text-[#e0e0e0]">Amount:</p>
           <p className="text-2xl font-bold text-[#6a0dad]">
-            GHS {amount.toFixed(2)}
+            {formatCurrency(amount)}
           </p>
         </div>
       </div>
@@ -127,7 +128,7 @@ const GroupConfirm = ({
         <div>
           <p className="text-sm text-[#e0e0e0]">Total Amount:</p>
           <p className="text-2xl font-bold text-[#6a0dad]">
-            GHS {totalAmount.toFixed(2)}
+            {formatCurrency(totalAmount)}
           </p>
         </div>
       </div>
@@ -164,7 +165,7 @@ const DeleteConfirm = ({
         Are you sure?
       </h2>
       <p className="text-[#a0a0a0] mb-6">
-        Do you really want to delete the group "{groupName}"?
+        Do you really want to delete the group &quot;{groupName}&quot;?
       </p>
       <div className="flex justify-center space-x-4">
         <button

@@ -53,3 +53,4 @@ export const getRiskBgColor = (risk: string) => {
       return "bg-[#4a007a]/20";
   }
 };
+

@@ -34,3 +34,4 @@ export const Tabs = ({ activeTab, setActiveTab }: TabsProps) => {
     </div>
   );
 };
+

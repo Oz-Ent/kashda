@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { formatCurrency } from "@/lib/formatUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPaperPlane,
+  faPlus,
   faEdit,
   faTrash,
+  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import { getGroups } from "@/lib/dataUtils";
 import { Modal } from "./Modal";
@@ -134,7 +136,7 @@ const GroupForm = ({ onClose, onSave, editingGroup }: GroupFormProps) => {
               className="flex justify-between items-center bg-[#2a004a] p-2 rounded"
             >
               <span className="text-[#e0e0e0]">
-                {user.name} ({user.identifier}) - GHS {user.amount.toFixed(2)}
+                {user.name} ({user.identifier}) - {formatCurrency(user.amount)}
               </span>
               <button
                 type="button"
@@ -248,7 +250,7 @@ export const GroupSection = () => {
       <div className="space-y-4">
         {groups.length === 0 ? (
           <p className="text-center text-[#a0a0a0]">
-            No groups created yet. Click 'Create New Group' to start.
+            You&apos;re not part of any groups yet. Create one to get started!
           </p>
         ) : (
           groups.map((group) => (
@@ -261,8 +263,8 @@ export const GroupSection = () => {
                   {group.name}
                 </h3>
                 <p className="text-sm text-[#a0a0a0]">
-                  {group.users.length} members - Total: GHS{" "}
-                  {group.totalAmount.toFixed(2)}
+                  {group.users.length} members - Total:{" "}
+                  {formatCurrency(group.totalAmount)}
                 </p>
               </div>
               <div className="space-x-2">
