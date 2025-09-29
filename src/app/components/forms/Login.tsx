@@ -57,6 +57,7 @@ const Login: React.FC<LoginProps> = ({
 
       if (result.success) {
         redirect("/dashboard");
+
       } else {
         if (result.error === "Firebase: Error (auth/invalid-credential).") {
           setError("Invalid email or password");

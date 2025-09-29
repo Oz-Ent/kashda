@@ -17,13 +17,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/contexts/SidebarContext";
-import { signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { useAuth } from "@/contexts/AuthContext";
 import React from "react";
 
 const SidePanel = React.memo(() => {
   const pathname = usePathname();
   const { isOpen, closeSidebar } = useSidebar();
+  const { signOut } = useAuth();
 
   const isActive = (path: string) => {
     return pathname === path || pathname.startsWith(path + "/");
@@ -187,9 +187,10 @@ const SidePanel = React.memo(() => {
           <Link
             href=""
             className="flex items-center p-3 rounded-lg text-red-400 hover:text-red-500 hover:bg-[#3a005f] transition-colors duration-200"
-            onClick={() => {
+            onClick={async (e) => {
+              e.preventDefault();
               handleLinkClick();
-              signOut(auth);
+              await signOut();
             }}
           >
             <FontAwesomeIcon icon={faSignOutAlt} className="mr-3 text-lg" />
