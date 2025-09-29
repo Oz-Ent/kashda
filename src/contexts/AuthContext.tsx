@@ -261,6 +261,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     async (email: string, password: string): Promise<AuthResponse> => {
       setLoading(true);
       const result = await AuthService.signInWithEmail(email, password);
+      if (result.success) {
+        // Reset session time on successful login
+        setSessionTime(0);
+        console.log("session time set to 0");
+        // Optimistically set local session start to avoid expiry race
+        setUserProfile((prev) => (prev ? { ...prev, sessionStartTime: new Date() } : prev));
+      }
       setLoading(false);
       return result;
     },
@@ -270,6 +277,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signInWithGoogle = useCallback(async (): Promise<AuthResponse> => {
     setLoading(true);
     const result = await AuthService.signInWithGoogle();
+    if (result.success) {
+      // Reset session time on successful login
+      setSessionTime(0);
+      // Optimistically set local session start to avoid expiry race
+      setUserProfile((prev) => (prev ? { ...prev, sessionStartTime: new Date() } : prev));
+    }
     setLoading(false);
     return result;
   }, []);
@@ -277,6 +290,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signInWithApple = useCallback(async (): Promise<AuthResponse> => {
     setLoading(true);
     const result = await AuthService.signInWithApple();
+    if (result.success) {
+      // Reset session time on successful login
+      setSessionTime(0);
+      // Optimistically set local session start to avoid expiry race
+      setUserProfile((prev) => (prev ? { ...prev, sessionStartTime: new Date() } : prev));
+    }
     setLoading(false);
     return result;
   }, []);
@@ -284,6 +303,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signOut = useCallback(async (): Promise<AuthResponse> => {
     setLoading(true);
     const result = await AuthService.signOut();
+    if (result.success) {
+      // User logged out willingly; zero out current session time immediately
+      setSessionTime(0);
+    }
+    console.log("session time set to 0");
     setLoading(false);
     return result;
   }, []);
@@ -359,19 +383,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const refreshSessionTime = useCallback(async (): Promise<void> => {
     if (user) {
-      const currentSessionTime = await AuthService.getSessionTime(user.uid);
-      if (currentSessionTime !== null) {
-        setSessionTime(currentSessionTime);
-
-        // Check if session has expired (24 hours = 86400000 ms)
-        const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
-        if (currentSessionTime > SESSION_TIMEOUT) {
-          // Session expired, sign out user
-          await signOut();
-        }
-      }
+      await refreshSessionTimeForUser({
+        userId: user.uid,
+        setSessionTime,
+        signOut,
+      });
     }
-  }, [user, signOut]);
+  }, [user, signOut, setSessionTime]);
 
   // KYC management methods
   const submitKYC = useCallback(
@@ -578,6 +596,26 @@ export const useRequireAuth = () => {
 
   return { user, loading };
 };
+
+// Exported helper to refresh session time for a specific user id
+export async function refreshSessionTimeForUser(params: {
+  userId: string;
+  setSessionTime: React.Dispatch<React.SetStateAction<number>>;
+  signOut: () => Promise<AuthResponse>;
+}): Promise<void> {
+  const { userId, setSessionTime, signOut } = params;
+  const currentSessionTime = await AuthService.getSessionTime(userId);
+  if (currentSessionTime !== null) {
+    setSessionTime(currentSessionTime);
+
+    // Check if session has expired (24 hours = 86400000 ms)
+    const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
+    if (currentSessionTime > SESSION_TIMEOUT) {
+      // Session expired, sign out user
+      await signOut();
+    }
+  }
+}
 
 // Session time formatter utility
 export const formatSessionTime = (milliseconds: number): string => {

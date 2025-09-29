@@ -23,6 +23,7 @@ export interface UserProfile {
   createdAt: Date;
   lastLoginAt: Date;
   sessionStartTime?: Date | Timestamp;
+  lastLogoutAt?: Date | null;
   emailVerified: boolean;
   provider: "email" | "google" | "apple";
   kycCompleted: boolean;
@@ -75,6 +76,7 @@ export interface LoggedInUser {
   lastName: string;
   accountType: "individual" | "business";
   photoURL?: string;
+  phoneNumber?: string;
   createdAt: Date;
   kycCompleted: boolean;
 }
@@ -211,6 +213,12 @@ export class AuthService {
    */
   static async signOut(): Promise<AuthResponse> {
     try {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        await updateDoc(doc(db, "users", currentUser.uid), {
+          lastLogoutAt: new Date(),
+        });
+      }
       await signOut(auth);
       return { success: true };
     } catch (error: unknown) {
@@ -275,6 +283,7 @@ export class AuthService {
       createdAt: new Date(),
       lastLoginAt: new Date(),
       sessionStartTime: new Date(),
+      lastLogoutAt: null,
       emailVerified: user.emailVerified,
       provider,
       kycCompleted: false, // Explicitly set to false for new users
@@ -297,6 +306,7 @@ export class AuthService {
       await updateDoc(doc(db, "users", uid), {
         lastLoginAt: new Date(),
         sessionStartTime: new Date(),
+        lastLogoutAt: null,
       });
     } catch (error) {
       console.error("Error updating user session:", error);

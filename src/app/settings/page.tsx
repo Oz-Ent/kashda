@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import AppLayout from "../components/common/AppLayout";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
+import { useAuth } from "@/contexts/AuthContext";
 
 const SettingsPage = () => {
   const settingsData = getSettingsData();
@@ -24,6 +25,7 @@ const SettingsPage = () => {
     "profile" | "notifications" | "security" | "preferences"
   >("profile");
   const [settings, setSettings] = useState(settingsData);
+  const { loggedInUser } = useAuth();
 
   const toggleSetting = (category: keyof typeof settings, setting: string) => {
     setSettings((prev) => ({
@@ -58,41 +60,37 @@ const SettingsPage = () => {
           <div className="flex space-x-1 bg-[#2a004a] rounded-lg p-1">
             <button
               onClick={() => setActiveTab("profile")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                activeTab === "profile"
-                  ? "bg-[#6a0dad] text-white"
-                  : "text-[#a0a0a0] hover:text-[#e0e0e0]"
-              }`}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${activeTab === "profile"
+                ? "bg-[#6a0dad] text-white"
+                : "text-[#a0a0a0] hover:text-[#e0e0e0]"
+                }`}
             >
               Profile
             </button>
             <button
               onClick={() => setActiveTab("notifications")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                activeTab === "notifications"
-                  ? "bg-[#6a0dad] text-white"
-                  : "text-[#a0a0a0] hover:text-[#e0e0e0]"
-              }`}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${activeTab === "notifications"
+                ? "bg-[#6a0dad] text-white"
+                : "text-[#a0a0a0] hover:text-[#e0e0e0]"
+                }`}
             >
               Notifications
             </button>
             <button
               onClick={() => setActiveTab("security")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                activeTab === "security"
-                  ? "bg-[#6a0dad] text-white"
-                  : "text-[#a0a0a0] hover:text-[#e0e0e0]"
-              }`}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${activeTab === "security"
+                ? "bg-[#6a0dad] text-white"
+                : "text-[#a0a0a0] hover:text-[#e0e0e0]"
+                }`}
             >
               Security
             </button>
             <button
               onClick={() => setActiveTab("preferences")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                activeTab === "preferences"
-                  ? "bg-[#6a0dad] text-white"
-                  : "text-[#a0a0a0] hover:text-[#e0e0e0]"
-              }`}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${activeTab === "preferences"
+                ? "bg-[#6a0dad] text-white"
+                : "text-[#a0a0a0] hover:text-[#e0e0e0]"
+                }`}
             >
               Preferences
             </button>
@@ -119,7 +117,7 @@ const SettingsPage = () => {
                     </label>
                     <input
                       type="text"
-                      defaultValue={userData.name}
+                      defaultValue={loggedInUser?.firstName + " " + loggedInUser?.lastName}
                       className="w-full p-3 rounded-lg bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] focus:outline-none focus:ring-2 focus:ring-[#6a0dad]"
                     />
                   </div>
@@ -130,7 +128,7 @@ const SettingsPage = () => {
                     </label>
                     <input
                       type="email"
-                      defaultValue={userData.email}
+                      defaultValue={loggedInUser?.email}
                       className="w-full p-3 rounded-lg bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] focus:outline-none focus:ring-2 focus:ring-[#6a0dad]"
                     />
                   </div>
@@ -141,7 +139,7 @@ const SettingsPage = () => {
                     </label>
                     <input
                       type="tel"
-                      defaultValue={userData.phone}
+                      defaultValue={loggedInUser?.phoneNumber ?? "No phone number"}
                       className="w-full p-3 rounded-lg bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] focus:outline-none focus:ring-2 focus:ring-[#6a0dad]"
                     />
                   </div>
@@ -155,7 +153,7 @@ const SettingsPage = () => {
 
                 <div className="text-center">
                   <img
-                    src={userData.avatar}
+                    src={"null"}
                     alt="Profile"
                     className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-[#d4af37]"
                   />
