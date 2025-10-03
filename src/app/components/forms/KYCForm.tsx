@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 
 const KYCForm = () => {
-  const { submitKYC, user } = useAuth();
+  const { submitKYC } = useAuth();
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -113,7 +113,10 @@ const KYCForm = () => {
       }
 
       // Validate documents
-      if (!documents.idType || !documents.idNumber) {
+      if (
+        (accountType === "individual" && !documents.idType) ||
+        !documents.idNumber
+      ) {
         alert("Please fill in all required document fields");
         setIsSubmitting(false);
         return;
@@ -241,7 +244,7 @@ const KYCForm = () => {
           </div>
         </div>
         {/* Account Type */}
-        <div className="mb-8">
+        {currentStep===1 &&<div className="mb-8">
           <h3 className="text-xl font-semibold text-[#e0e0e0] mb-2">
             Account Type *
           </h3>
@@ -269,7 +272,7 @@ const KYCForm = () => {
               <span className="ml-2 text-[#e0e0e0]">Business</span>
             </label>
           </div>
-        </div>
+        </div>}
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Step 1: Personal Information */}
           {currentStep === 1 && (
@@ -497,8 +500,8 @@ const KYCForm = () => {
                       <option value="">Select ID Type</option>
                       <option value="national_id">National ID</option>
                       <option value="passport">Passport</option>
-                      <option value="drivers_license">{`Driver's License`}</option>
-                      <option value="voter_id">Voter ID</option>
+                      {/* <option value="drivers_license">{`Driver's License`}</option>
+                      <option value="voter_id">Voter ID</option> */}
                     </select>
                   </div>
                 )}

@@ -5,9 +5,10 @@ import React from "react";
 interface TabsProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  accountType: string;
 }
 
-export const Tabs = ({ activeTab, setActiveTab }: TabsProps) => {
+export const Tabs = ({ activeTab, setActiveTab, accountType }: TabsProps) => {
   const getTabClass = (tabName: string) => {
     const baseClass =
       "flex-1 py-2 px-4 text-center font-semibold rounded-t-lg transition-colors duration-300";
@@ -25,12 +26,14 @@ export const Tabs = ({ activeTab, setActiveTab }: TabsProps) => {
       >
         Individual
       </button>
+      {accountType==="business" && 
       <button
         onClick={() => setActiveTab("group")}
         className={getTabClass("group")}
       >
         Group
       </button>
+       } 
     </div>
   );
 };
