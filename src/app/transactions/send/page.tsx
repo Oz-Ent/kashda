@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useStaticRedirect } from "@/lib/staticRedirect";
@@ -9,12 +9,33 @@ import { Tabs } from "./Tabs";
 import { IndividualForm } from "./IndividualForm";
 import { GroupSection } from "./GroupSection";
 import { Modal } from "./Modal";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function SendMoney() {
   const [activeTab, setActiveTab] = useState("individual");
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
   const { redirect } = useStaticRedirect();
+    const { loggedInUser } = useAuth();
+  
+    // Memoize the user initials and display name to prevent unnecessary re-renders
+    const userInfo = useMemo(() => {
+      if (!loggedInUser) {
+        return { accountType: "Personal" };
+      }
+  
+      const isIndividual = loggedInUser.accountType === "individual";
+  
+      if (isIndividual) {
+        return {
+          accountType: "personal",
+        };
+      } else {
+        return {
+          accountType: "business",
+        };
+      }
+    }, [loggedInUser?.accountType]);
 
   const handleIndividualSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,7 +89,7 @@ export default function SendMoney() {
           </div>
         </div>
 
-        <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Tabs activeTab={activeTab} setActiveTab={setActiveTab} accountType={userInfo.accountType} />
 
         {activeTab === "individual" && (
           <IndividualForm onSubmit={handleIndividualSubmit} />
