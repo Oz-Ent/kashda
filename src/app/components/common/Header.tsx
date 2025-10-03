@@ -33,11 +33,7 @@ const Header = React.memo(() => {
         accountType: "Business",
       };
     }
-  }, [
-    loggedInUser?.accountType,
-    loggedInUser?.firstName,
-    loggedInUser?.lastName,
-  ]);
+  }, [loggedInUser]);
 
   return (
     <header className="bg-[#3a005f] border border-[#4a007a] p-4 flex items-center justify-between shadow-md">

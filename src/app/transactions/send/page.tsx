@@ -35,7 +35,7 @@ export default function SendMoney() {
           accountType: "business",
         };
       }
-    }, [loggedInUser?.accountType]);
+    }, [loggedInUser]);
 
   const handleIndividualSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
