@@ -11,10 +11,12 @@ import {
   faSmile,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { useState } from "react";
+import { useState } from "react";
 import { useDataState } from "@/hooks/useDataState";
 import { formatCurrency, formatDate } from "@/lib/formatUtils";
+import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
 import AppLayout from "../components/common/AppLayout";
+import CurrencySelector from "../components/ui/CurrencySelector";
 import {
   StatCardSkeleton,
   CardSkeleton,
@@ -24,6 +26,7 @@ import ProtectedRoute from "../components/auth/ProtectedRoute";
 
 const RevenuePage = () => {
   const { isLoading, isEmpty, data } = useDataState();
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const revenueData = data.revenue;
   // const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
 
@@ -45,10 +48,16 @@ const RevenuePage = () => {
                 Manage your tax payments and government revenue obligations
               </p>
             </div>
-            <button className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200">
-              <FontAwesomeIcon icon={faCreditCard} />
-              <span>Pay Now</span>
-            </button>
+            <div className="flex items-center space-x-4">
+              <CurrencySelector
+                selectedCurrency={selectedCurrency}
+                onCurrencyChange={setSelectedCurrency}
+              />
+              <button className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200">
+                <FontAwesomeIcon icon={faCreditCard} />
+                <span>Pay Now</span>
+              </button>
+            </div>
           </div>
 
           {/* Revenue Overview */}
@@ -71,7 +80,7 @@ const RevenuePage = () => {
                   />
                 </div>
                 <p className="text-3xl font-bold text-green-400">
-                  {formatCurrency(totalPaid)}
+                  {formatCurrencyWithSymbol(totalPaid, selectedCurrency)}
                 </p>
               </div>
 
@@ -86,7 +95,7 @@ const RevenuePage = () => {
                   />
                 </div>
                 <p className="text-3xl font-bold text-red-400">
-                  {formatCurrency(revenueData.outstandingAmount)}
+                  {formatCurrencyWithSymbol(revenueData.outstandingAmount, selectedCurrency)}
                 </p>
               </div>
 
@@ -152,7 +161,7 @@ const RevenuePage = () => {
                         You have an outstanding{" "}
                         {revenueData.outstandingDescription} payment of{" "}
                         <span className="font-bold text-red-400">
-                          {formatCurrency(revenueData.outstandingAmount)}
+                          {formatCurrencyWithSymbol(revenueData.outstandingAmount, selectedCurrency)}
                         </span>
                         . Please settle this payment to avoid penalties.
                       </p>
@@ -196,11 +205,10 @@ const RevenuePage = () => {
                       </div>
                       <div className="text-right">
                         <p
-                          className={`font-bold ${
-                            isEmpty ? "text-[#a0a0a0]" : "text-red-400"
-                          }`}
+                          className={`font-bold ${isEmpty ? "text-[#a0a0a0]" : "text-red-400"
+                            }`}
                         >
-                          {isEmpty ? "N/A" : formatCurrency(150.0)}
+                          {isEmpty ? "N/A" : formatCurrencyWithSymbol(150.0, selectedCurrency)}
                         </p>
                         <p className="text-xs text-[#a0a0a0]">Due: Dec 2024</p>
                       </div>
@@ -219,9 +227,8 @@ const RevenuePage = () => {
                       </div>
                       <div className="text-right">
                         <p
-                          className={`font-bold ${
-                            isEmpty ? "text-[#a0a0a0]" : "text-green-400"
-                          }`}
+                          className={`font-bold ${isEmpty ? "text-[#a0a0a0]" : "text-green-400"
+                            }`}
                         >
                           {isEmpty ? "N/A" : "Paid"}
                         </p>
@@ -242,9 +249,8 @@ const RevenuePage = () => {
                       </div>
                       <div className="text-right">
                         <p
-                          className={`font-bold ${
-                            isEmpty ? "text-[#a0a0a0]" : "text-green-400"
-                          }`}
+                          className={`font-bold ${isEmpty ? "text-[#a0a0a0]" : "text-green-400"
+                            }`}
                         >
                           {isEmpty ? "N/A" : "Paid"}
                         </p>
@@ -370,7 +376,7 @@ const RevenuePage = () => {
                             {payment.description}
                           </td>
                           <td className="py-3 px-4 text-sm font-semibold text-[#d4af37]">
-                            {formatCurrency(payment.amount)}
+                            {formatCurrencyWithSymbol(payment.amount, selectedCurrency)}
                           </td>
                           <td className="py-3 px-4 text-sm">
                             <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">

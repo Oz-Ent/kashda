@@ -1,131 +1,131 @@
 {
-    "user": {
-        "name": "Kwakye",
-        "email": "kwakye@example.com",
-        "phone": "+233 24 123 4567",
-        "role": "User",
-        "avatar": "https://placehold.co/40x40/6a0dad/e0e0e0?text=K"
-    },
-    "wallets": [
-        {
-            "id": "main",
-            "type": "Main Wallet",
-            "balance": 0.00,
-            "currency": "GH₵",
-            "isVisible": true,
-            "color": "#d4af37"
-        }
-    ],
-    "transactions": [],
-    "pension": {
-        "subscriptionStatus": "Not Subscribed",
-        "monthlyPayment": "No payments made",
-        "contributions": [],
-        "totalContributions": 0.00,
-        "estimatedRetirementBenefit": 0.00
-    },
-    "insurance": {
-        "plans": [],
-        "availablePlans": [
-            {
-                "id": "life",
-                "name": "Life Insurance",
-                "premium": 300.00,
-                "coverage": 100000.00,
-                "description": "Comprehensive life insurance coverage"
-            },
-            {
-                "id": "property",
-                "name": "Property Insurance",
-                "premium": 250.00,
-                "coverage": 75000.00,
-                "description": "Protection for your property and belongings"
-            },
-            {
-                "id": "health",
-                "name": "Health Protection Plan",
-                "premium": 150.00,
-                "coverage": 50000.00,
-                "description": "Essential health coverage for you and your family"
-            },
-            {
-                "id": "motor",
-                "name": "Motor Vehicle Insurance",
-                "premium": 200.00,
-                "coverage": 25000.00,
-                "description": "Complete protection for your vehicle"
-            }
-        ]
-    },
-    "revenue": {
-        "paidAmount": 0.00,
-        "outstandingAmount": 0.00,
-        "outstandingDescription": "No outstanding payments",
-        "paymentHistory": []
-    },
-    "savings": {
-        "goals": [],
-        "totalSavings": 0.00,
-        "monthlyContribution": 0.00
-    },
-    "investments": {
-        "portfolio": [],
-        "totalInvestments": 0.00,
-        "totalReturns": 0.0,
-        "availableInvestments": [
-            {
-                "id": "treasury",
-                "name": "Treasury Bills",
-                "minimumAmount": 1000.00,
-                "expectedReturns": 6.5,
-                "risk": "Very Low",
-                "duration": "91 days"
-            },
-            {
-                "id": "real-estate",
-                "name": "Real Estate Fund",
-                "minimumAmount": 10000.00,
-                "expectedReturns": 18.5,
-                "risk": "Medium",
-                "duration": "5 years"
-            },
-            {
-                "id": "stocks",
-                "name": "Ghana Stock Exchange",
-                "minimumAmount": 500.00,
-                "expectedReturns": 12.5,
-                "risk": "Medium",
-                "duration": "Variable"
-            },
-            {
-                "id": "bonds",
-                "name": "Government Bonds",
-                "minimumAmount": 2000.00,
-                "expectedReturns": 8.2,
-                "risk": "Low",
-                "duration": "3-5 years"
-            }
-        ]
-    },
-    "groups": [],
-    "settings": {
-        "notifications": {
-            "email": true,
-            "sms": true,
-            "push": true,
-            "transactionAlerts": true,
-            "paymentReminders": true
-        },
-        "security": {
-            "twoFactorAuth": false,
-            "biometricAuth": false,
-            "sessionTimeout": 30
-        },
-        "preferences": {
-            "currency": "GH₵",
-            "language": "English",
-            "theme": "Dark",
-            "dateFormat": "DD/MM/YYYY"
-        }
+  "user": {
+    "name": "Kwakye",
+    "email": "kwakye@example.com",
+    "phone": "+233 24 123 4567",
+    "role": "User",
+    "avatar": "https://placehold.co/40x40/6a0dad/e0e0e0?text=K"
+  },
+  "wallets": [
+    {
+      "id": "main",
+      "type": "Main Wallet",
+      "balance": 0.0,
+      "currency": "USD",
+      "isVisible": true,
+      "color": "#d4af37"
     }
+  ],
+  "transactions": [],
+  "pension": {
+    "subscriptionStatus": "Not Subscribed",
+    "monthlyPayment": "No payments made",
+    "contributions": [],
+    "totalContributions": 0.0,
+    "estimatedRetirementBenefit": 0.0
+  },
+  "insurance": {
+    "plans": [],
+    "availablePlans": [
+      {
+        "id": "life",
+        "name": "Life Insurance",
+        "premium": 300.0,
+        "coverage": 100000.0,
+        "description": "Comprehensive life insurance coverage"
+      },
+      {
+        "id": "property",
+        "name": "Property Insurance",
+        "premium": 250.0,
+        "coverage": 75000.0,
+        "description": "Protection for your property and belongings"
+      },
+      {
+        "id": "health",
+        "name": "Health Protection Plan",
+        "premium": 150.0,
+        "coverage": 50000.0,
+        "description": "Essential health coverage for you and your family"
+      },
+      {
+        "id": "motor",
+        "name": "Motor Vehicle Insurance",
+        "premium": 200.0,
+        "coverage": 25000.0,
+        "description": "Complete protection for your vehicle"
+      }
+    ]
+  },
+  "revenue": {
+    "paidAmount": 0.0,
+    "outstandingAmount": 0.0,
+    "outstandingDescription": "No outstanding payments",
+    "paymentHistory": []
+  },
+  "savings": {
+    "goals": [],
+    "totalSavings": 0.0,
+    "monthlyContribution": 0.0
+  },
+  "investments": {
+    "portfolio": [],
+    "totalInvestments": 0.0,
+    "totalReturns": 0.0,
+    "availableInvestments": [
+      {
+        "id": "treasury",
+        "name": "Treasury Bills",
+        "minimumAmount": 1000.0,
+        "expectedReturns": 6.5,
+        "risk": "Very Low",
+        "duration": "91 days"
+      },
+      {
+        "id": "real-estate",
+        "name": "Real Estate Fund",
+        "minimumAmount": 10000.0,
+        "expectedReturns": 18.5,
+        "risk": "Medium",
+        "duration": "5 years"
+      },
+      {
+        "id": "stocks",
+        "name": "Ghana Stock Exchange",
+        "minimumAmount": 500.0,
+        "expectedReturns": 12.5,
+        "risk": "Medium",
+        "duration": "Variable"
+      },
+      {
+        "id": "bonds",
+        "name": "Government Bonds",
+        "minimumAmount": 2000.0,
+        "expectedReturns": 8.2,
+        "risk": "Low",
+        "duration": "3-5 years"
+      }
+    ]
+  },
+  "groups": [],
+  "settings": {
+    "notifications": {
+      "email": true,
+      "sms": true,
+      "push": true,
+      "transactionAlerts": true,
+      "paymentReminders": true
+    },
+    "security": {
+      "twoFactorAuth": false,
+      "biometricAuth": false,
+      "sessionTimeout": 30
+    },
+    "preferences": {
+      "currency": "USD",
+      "language": "English",
+      "theme": "Dark",
+      "dateFormat": "DD/MM/YYYY"
+    }
+  }
 }

@@ -1,11 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWallet, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useDataState } from "@/hooks/useDataState";
+import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
 import AppLayout from "../components/common/AppLayout";
 import BalanceCarousel from "../components/ui/BalanceCarousel";
+import CurrencySelector from "../components/ui/CurrencySelector";
 import { CardSkeleton } from "../components/ui/LoadingSkeleton";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 
@@ -14,25 +16,37 @@ const WalletsPage = () => {
     loadingTimeout: 2000,
     emptyTimer: 4000,
   });
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const wallets = data.wallets;
 
   return (
     <ProtectedRoute>
       <AppLayout>
         <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold text-[#e0e0e0] mb-2">
-              My Wallets
-            </h1>
-            <p className="text-[#a0a0a0]">
-              Manage all your wallets and accounts in one place
-            </p>
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold text-[#e0e0e0] mb-2">
+                My Wallets
+              </h1>
+              <p className="text-[#a0a0a0]">
+                Manage all your wallets and accounts in one place
+              </p>
+            </div>
+            <CurrencySelector
+              selectedCurrency={selectedCurrency}
+              onCurrencyChange={setSelectedCurrency}
+            />
           </div>
           {/* Balance Cards */}
           {isLoading ? (
             <CardSkeleton className="h-32" />
           ) : (
-            <BalanceCarousel wallets={wallets} title="All Wallets" />
+            <BalanceCarousel
+              wallets={wallets}
+              title="All Wallets"
+              displayCurrency={selectedCurrency}
+              onCurrencyChange={setSelectedCurrency}
+            />
           )}
 
           {/* Wallet Details */}
@@ -91,16 +105,13 @@ const WalletsPage = () => {
                     <div className="flex justify-between">
                       <span className="text-[#a0a0a0]">Balance:</span>
                       <span className="text-[#e0e0e0] font-semibold">
-                        {wallet.currency}{" "}
-                        {wallet.balance.toLocaleString("en-GH", {
-                          minimumFractionDigits: 2,
-                        })}
+                        {formatCurrencyWithSymbol(wallet.balance, selectedCurrency)}
                       </span>
                     </div>
 
                     <div className="flex justify-between">
                       <span className="text-[#a0a0a0]">Currency:</span>
-                      <span className="text-[#e0e0e0]">{wallet.currency}</span>
+                      <span className="text-[#e0e0e0]">{selectedCurrency}</span>
                     </div>
 
                     <div className="flex justify-between">

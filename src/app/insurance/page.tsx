@@ -15,7 +15,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDataState } from "@/hooks/useDataState";
 import { formatCurrency, formatDate } from "@/lib/formatUtils";
+import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
 import AppLayout from "../components/common/AppLayout";
+import CurrencySelector from "../components/ui/CurrencySelector";
 import {
   StatCardSkeleton,
   CardSkeleton,
@@ -24,6 +26,7 @@ import ProtectedRoute from "../components/auth/ProtectedRoute";
 
 const InsurancePage = () => {
   const { isLoading, isEmpty, data } = useDataState();
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const insuranceData = data.insurance;
   const [selectedPlan, setSelectedPlan] = useState(
     insuranceData.plans[0] || null
@@ -54,10 +57,16 @@ const InsurancePage = () => {
                 Protect yourself and your loved ones with our insurance coverage
               </p>
             </div>
-            <button className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200">
-              <FontAwesomeIcon icon={faPlus} />
-              <span>New Plan</span>
-            </button>
+            <div className="flex items-center space-x-4">
+              <CurrencySelector
+                selectedCurrency={selectedCurrency}
+                onCurrencyChange={setSelectedCurrency}
+              />
+              <button className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200">
+                <FontAwesomeIcon icon={faPlus} />
+                <span>New Plan</span>
+              </button>
+            </div>
           </div>
 
           {/* Insurance Overview */}
@@ -80,7 +89,7 @@ const InsurancePage = () => {
                   />
                 </div>
                 <p className="text-3xl font-bold text-[#d4af37]">
-                  {formatCurrency(totalCoverage)}
+                  {formatCurrencyWithSymbol(totalCoverage, selectedCurrency)}
                 </p>
               </div>
 
@@ -95,7 +104,7 @@ const InsurancePage = () => {
                   />
                 </div>
                 <p className="text-3xl font-bold text-[#6a0dad]">
-                  {formatCurrency(totalPremium)}
+                  {formatCurrencyWithSymbol(totalPremium, selectedCurrency)}
                 </p>
               </div>
 
@@ -120,21 +129,19 @@ const InsurancePage = () => {
           <div className="flex space-x-1 bg-[#2a004a] rounded-lg p-1">
             <button
               onClick={() => setActiveTab("current")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                activeTab === "current"
-                  ? "bg-[#6a0dad] text-white"
-                  : "text-[#a0a0a0] hover:text-[#e0e0e0]"
-              }`}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${activeTab === "current"
+                ? "bg-[#6a0dad] text-white"
+                : "text-[#a0a0a0] hover:text-[#e0e0e0]"
+                }`}
             >
               Current Plans
             </button>
             <button
               onClick={() => setActiveTab("available")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                activeTab === "available"
-                  ? "bg-[#6a0dad] text-white"
-                  : "text-[#a0a0a0] hover:text-[#e0e0e0]"
-              }`}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${activeTab === "available"
+                ? "bg-[#6a0dad] text-white"
+                : "text-[#a0a0a0] hover:text-[#e0e0e0]"
+                }`}
             >
               Available Plans
             </button>
@@ -177,11 +184,10 @@ const InsurancePage = () => {
                   insuranceData.plans.map((plan) => (
                     <div
                       key={plan.id}
-                      className={`bg-[#3a005f] border p-4 rounded-xl cursor-pointer transition-colors duration-200 ${
-                        selectedPlan && selectedPlan.id === plan.id
-                          ? "border-[#6a0dad] bg-[#6a0dad]/10"
-                          : "border-[#4a007a] hover:border-[#6a0dad]"
-                      }`}
+                      className={`bg-[#3a005f] border p-4 rounded-xl cursor-pointer transition-colors duration-200 ${selectedPlan && selectedPlan.id === plan.id
+                        ? "border-[#6a0dad] bg-[#6a0dad]/10"
+                        : "border-[#4a007a] hover:border-[#6a0dad]"
+                        }`}
                       onClick={() => setSelectedPlan(plan)}
                     >
                       <div className="flex justify-between items-start mb-3">
@@ -211,13 +217,13 @@ const InsurancePage = () => {
                         <div>
                           <p className="text-[#a0a0a0]">Coverage</p>
                           <p className="text-[#e0e0e0] font-semibold">
-                            {formatCurrency(plan.coverage)}
+                            {formatCurrencyWithSymbol(plan.coverage, selectedCurrency)}
                           </p>
                         </div>
                         <div>
                           <p className="text-[#a0a0a0]">Premium</p>
                           <p className="text-[#d4af37] font-semibold">
-                            {formatCurrency(plan.premium)}/month
+                            {formatCurrencyWithSymbol(plan.premium, selectedCurrency)}/month
                           </p>
                         </div>
                       </div>
@@ -280,7 +286,7 @@ const InsurancePage = () => {
                             Coverage Amount
                           </p>
                           <p className="text-2xl font-bold text-[#6a0dad]">
-                            {formatCurrency(selectedPlan.coverage)}
+                            {formatCurrencyWithSymbol(selectedPlan.coverage, selectedCurrency)}
                           </p>
                         </div>
                         <div className="bg-[#2a004a] p-4 rounded-lg">
@@ -288,7 +294,7 @@ const InsurancePage = () => {
                             Monthly Premium
                           </p>
                           <p className="text-2xl font-bold text-[#d4af37]">
-                            {formatCurrency(selectedPlan.premium)}
+                            {formatCurrencyWithSymbol(selectedPlan.premium, selectedCurrency)}
                           </p>
                         </div>
                       </div>
@@ -358,13 +364,13 @@ const InsurancePage = () => {
                       <div className="flex justify-between">
                         <span className="text-[#a0a0a0]">Coverage:</span>
                         <span className="text-[#e0e0e0] font-semibold">
-                          {formatCurrency(plan.coverage)}
+                          {formatCurrencyWithSymbol(plan.coverage, selectedCurrency)}
                         </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#a0a0a0]">Monthly Premium:</span>
                         <span className="text-[#d4af37] font-semibold">
-                          {formatCurrency(plan.premium)}
+                          {formatCurrencyWithSymbol(plan.premium, selectedCurrency)}
                         </span>
                       </div>
                     </div>

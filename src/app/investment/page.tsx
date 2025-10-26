@@ -17,7 +17,9 @@ import {
   getRiskColor,
   getRiskBgColor,
 } from "@/lib/formatUtils";
+import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
 import AppLayout from "../components/common/AppLayout";
+import CurrencySelector from "../components/ui/CurrencySelector";
 import {
   StatCardSkeleton,
   CardSkeleton,
@@ -26,6 +28,7 @@ import ProtectedRoute from "../components/auth/ProtectedRoute";
 
 const InvestmentPage = () => {
   const { isLoading, isEmpty, data } = useDataState();
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const investmentData = data.investments;
   const [selectedInvestment, setSelectedInvestment] = useState(
     investmentData.portfolio[0] || null
@@ -44,10 +47,16 @@ const InvestmentPage = () => {
                 Manage and track your investment portfolio
               </p>
             </div>
-            <button className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200">
-              <FontAwesomeIcon icon={faPlus} />
-              <span>New Investment</span>
-            </button>
+            <div className="flex items-center space-x-4">
+              <CurrencySelector
+                selectedCurrency={selectedCurrency}
+                onCurrencyChange={setSelectedCurrency}
+              />
+              <button className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200">
+                <FontAwesomeIcon icon={faPlus} />
+                <span>New Investment</span>
+              </button>
+            </div>
           </div>
 
           {/* Investment Overview */}
@@ -70,7 +79,7 @@ const InvestmentPage = () => {
                   />
                 </div>
                 <p className="text-3xl font-bold text-[#d4af37]">
-                  {formatCurrency(investmentData.totalInvestments)}
+                  {formatCurrencyWithSymbol(investmentData.totalInvestments, selectedCurrency)}
                 </p>
               </div>
 
@@ -83,19 +92,17 @@ const InvestmentPage = () => {
                     icon={
                       investmentData.totalReturns >= 0 ? faArrowUp : faArrowDown
                     }
-                    className={`text-xl ${
-                      investmentData.totalReturns >= 0
-                        ? "text-green-400"
-                        : "text-red-400"
-                    }`}
+                    className={`text-xl ${investmentData.totalReturns >= 0
+                      ? "text-green-400"
+                      : "text-red-400"
+                      }`}
                   />
                 </div>
                 <p
-                  className={`text-3xl font-bold ${
-                    investmentData.totalReturns >= 0
-                      ? "text-green-400"
-                      : "text-red-400"
-                  }`}
+                  className={`text-3xl font-bold ${investmentData.totalReturns >= 0
+                    ? "text-green-400"
+                    : "text-red-400"
+                    }`}
                 >
                   {investmentData.totalReturns >= 0 ? "+" : ""}
                   {investmentData.totalReturns.toFixed(1)}%
@@ -154,12 +161,11 @@ const InvestmentPage = () => {
                 investmentData.portfolio.map((investment) => (
                   <div
                     key={investment.id}
-                    className={`bg-[#3a005f] border p-4 rounded-xl cursor-pointer transition-colors duration-200 ${
-                      selectedInvestment &&
+                    className={`bg-[#3a005f] border p-4 rounded-xl cursor-pointer transition-colors duration-200 ${selectedInvestment &&
                       selectedInvestment.id === investment.id
-                        ? "border-[#6a0dad] bg-[#6a0dad]/10"
-                        : "border-[#4a007a] hover:border-[#6a0dad]"
-                    }`}
+                      ? "border-[#6a0dad] bg-[#6a0dad]/10"
+                      : "border-[#4a007a] hover:border-[#6a0dad]"
+                      }`}
                     onClick={() => setSelectedInvestment(investment)}
                   >
                     <div className="flex justify-between items-start mb-3">
@@ -173,14 +179,13 @@ const InvestmentPage = () => {
                       </div>
                       <div className="text-right">
                         <p className="text-lg font-bold text-[#d4af37]">
-                          {formatCurrency(investment.amount)}
+                          {formatCurrencyWithSymbol(investment.amount, selectedCurrency)}
                         </p>
                         <p
-                          className={`text-sm font-semibold ${
-                            investment.returns >= 0
-                              ? "text-green-400"
-                              : "text-red-400"
-                          }`}
+                          className={`text-sm font-semibold ${investment.returns >= 0
+                            ? "text-green-400"
+                            : "text-red-400"
+                            }`}
                         >
                           {investment.returns >= 0 ? "+" : ""}
                           {investment.returns.toFixed(1)}%
@@ -247,17 +252,16 @@ const InvestmentPage = () => {
                           Investment Amount
                         </p>
                         <p className="text-xl font-bold text-[#6a0dad]">
-                          {formatCurrency(selectedInvestment.amount)}
+                          {formatCurrencyWithSymbol(selectedInvestment.amount, selectedCurrency)}
                         </p>
                       </div>
                       <div className="bg-[#2a004a] p-4 rounded-lg">
                         <p className="text-sm text-[#a0a0a0] mb-1">Returns</p>
                         <p
-                          className={`text-xl font-bold ${
-                            selectedInvestment.returns >= 0
-                              ? "text-green-400"
-                              : "text-red-400"
-                          }`}
+                          className={`text-xl font-bold ${selectedInvestment.returns >= 0
+                            ? "text-green-400"
+                            : "text-red-400"
+                            }`}
                         >
                           {selectedInvestment.returns >= 0 ? "+" : ""}
                           {selectedInvestment.returns.toFixed(1)}%
@@ -335,7 +339,7 @@ const InvestmentPage = () => {
                           {investment.name}
                         </h3>
                         <p className="text-sm text-[#a0a0a0]">
-                          Min: {formatCurrency(investment.minimumAmount)}
+                          Min: {formatCurrencyWithSymbol(investment.minimumAmount, selectedCurrency)}
                         </p>
                       </div>
                       <span
