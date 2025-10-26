@@ -13,7 +13,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDataState } from "@/hooks/useDataState";
 import { formatCurrency } from "@/lib/formatUtils";
+import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
 import AppLayout from "../components/common/AppLayout";
+import CurrencySelector from "../components/ui/CurrencySelector";
 import { CardSkeleton, TableSkeleton } from "../components/ui/LoadingSkeleton";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 
@@ -21,6 +23,7 @@ type FilterType = "all" | "income" | "expenses";
 
 const TransactionsPage = () => {
   const [filter, setFilter] = useState<FilterType>("all");
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const { isLoading, isEmpty, data } = useDataState();
 
   const getFilteredTransactions = () => {
@@ -35,7 +38,7 @@ const TransactionsPage = () => {
   const transactions = getFilteredTransactions();
 
   const formatAmount = (amount: number) => {
-    const formatted = formatCurrency(Math.abs(amount));
+    const formatted = formatCurrencyWithSymbol(Math.abs(amount), selectedCurrency);
     return amount >= 0 ? `+ ${formatted}` : `- ${formatted}`;
   };
 
@@ -52,13 +55,19 @@ const TransactionsPage = () => {
     <ProtectedRoute>
       <AppLayout>
         <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold text-[#e0e0e0] mb-2">
-              Transactions
-            </h1>
-            <p className="text-[#a0a0a0]">
-              Manage your money transfers and view transaction history
-            </p>
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold text-[#e0e0e0] mb-2">
+                Transactions
+              </h1>
+              <p className="text-[#a0a0a0]">
+                Manage your money transfers and view transaction history
+              </p>
+            </div>
+            <CurrencySelector
+              selectedCurrency={selectedCurrency}
+              onCurrencyChange={setSelectedCurrency}
+            />
           </div>
 
           {/* Quick Actions - Top Row Format */}
@@ -163,9 +172,8 @@ const TransactionsPage = () => {
                   <p className="text-[#a0a0a0] mb-6">
                     {isEmpty
                       ? "Start using your wallet to see transaction history here."
-                      : `No transactions found for the ${
-                          filter === "all" ? "selected" : filter
-                        } filter.`}
+                      : `No transactions found for the ${filter === "all" ? "selected" : filter
+                      } filter.`}
                   </p>
                   {isEmpty && (
                     <div className="flex justify-center space-x-4">
@@ -227,11 +235,10 @@ const TransactionsPage = () => {
                             {transaction.category}
                           </td>
                           <td
-                            className={`py-3 px-4 text-sm font-semibold whitespace-nowrap  ${
-                              transaction.amount >= 0
-                                ? "text-green-500"
-                                : "text-red-400"
-                            }`}
+                            className={`py-3 px-4 text-sm font-semibold whitespace-nowrap  ${transaction.amount >= 0
+                              ? "text-green-500"
+                              : "text-red-400"
+                              }`}
                           >
                             {formatAmount(transaction.amount)}
                           </td>

@@ -7,6 +7,7 @@ import {
   faEyeSlash,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
+import { formatCurrencyWithSymbol, getCurrencySymbol } from "@/lib/currencyUtils";
 
 interface BalanceCardProps {
   type: string;
@@ -14,6 +15,8 @@ interface BalanceCardProps {
   currency: string;
   color?: string;
   className?: string;
+  displayCurrency?: string;
+  onCurrencyChange?: (currency: string) => void;
 }
 
 const BalanceCard: React.FC<BalanceCardProps> = ({
@@ -22,6 +25,8 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
   currency,
   color = "#d4af37",
   className = "",
+  displayCurrency = currency,
+  onCurrencyChange,
 }) => {
   const [isVisible, setIsVisible] = useState(true);
 
@@ -30,10 +35,8 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
   };
 
   const formatBalance = (amount: number) => {
-    return new Intl.NumberFormat("en-GH", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(amount);
+    // Always use formatCurrencyWithSymbol to ensure proper currency formatting
+    return formatCurrencyWithSymbol(amount, displayCurrency);
   };
 
   return (
@@ -51,12 +54,21 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
       </div>
       <div className="flex items-baseline justify-between">
         <p className="text-4xl font-bold" style={{ color: color }}>
-          {isVisible ? `${currency} ${formatBalance(balance)}` : "••••••"}
+          {isVisible ? formatBalance(balance) : "••••••"}
         </p>
-        <button className="text-sm text-[#a0a0a0] flex items-center space-x-1 focus:outline-none hover:text-[#e0e0e0] transition-colors duration-200">
-          <span>{currency}</span>
-          <FontAwesomeIcon icon={faChevronDown} className="text-xs" />
-        </button>
+        {onCurrencyChange ? (
+          <select
+            value={displayCurrency}
+            onChange={(e) => onCurrencyChange(e.target.value)}
+            className="text-sm bg-transparent text-[#a0a0a0] border-none focus:outline-none hover:text-[#e0e0e0] transition-colors duration-200 cursor-pointer"
+          >
+            <option value="USD">USD</option>
+            <option value="GH₵">GH₵</option>
+            <option value="DZD">DZD</option>
+          </select>
+        ) : (
+          <span className="text-sm text-[#a0a0a0]">{displayCurrency}</span>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
-export const formatCurrency = (amount: number, currency: string = "GHS") => {
-  return new Intl.NumberFormat("en-GH", {
+export const formatCurrency = (amount: number, currency: string = "USD") => {
+  return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: currency,
     minimumFractionDigits: 2,
@@ -53,4 +53,3 @@ export const getRiskBgColor = (risk: string) => {
       return "bg-[#4a007a]/20";
   }
 };
-

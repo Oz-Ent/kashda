@@ -486,10 +486,9 @@ const SettingsPage = () => {
                       }
                       className="w-full p-3 rounded-lg bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] focus:outline-none focus:ring-2 focus:ring-[#6a0dad]"
                     >
-                      <option value="GH₵">Ghanaian Cedi (GH₵)</option>
                       <option value="USD">US Dollar (USD)</option>
-                      <option value="EUR">Euro (EUR)</option>
-                      <option value="GBP">British Pound (GBP)</option>
+                      <option value="GH₵">Ghanaian Cedi (GH₵)</option>
+                      <option value="DZD">Algerian Dinar (DZD)</option>
                     </select>
                   </div>
 

@@ -19,11 +19,15 @@ interface Wallet {
 interface BalanceCarouselProps {
   wallets: Wallet[];
   title?: string;
+  displayCurrency?: string;
+  onCurrencyChange?: (currency: string) => void;
 }
 
 const BalanceCarousel: React.FC<BalanceCarouselProps> = ({
   wallets,
   title = "My Balances",
+  displayCurrency,
+  onCurrencyChange,
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -54,6 +58,8 @@ const BalanceCarousel: React.FC<BalanceCarouselProps> = ({
               balance={wallet.balance}
               currency={wallet.currency}
               color={wallet.color}
+              displayCurrency={displayCurrency}
+              onCurrencyChange={onCurrencyChange}
             />
           ))}
         </div>

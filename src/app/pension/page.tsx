@@ -11,11 +11,13 @@ import {
   faUmbrella,
 } from "@fortawesome/free-solid-svg-icons";
 import { formatCurrency, formatDate } from "@/lib/formatUtils";
+import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
 import { useDataState } from "@/hooks/useDataState";
 import AppLayout from "../components/common/AppLayout";
 import { StatCardGrid } from "../components/ui/StatCard";
 import TabNavigation from "../components/ui/TabNavigation";
 import DataTable from "../components/data/DataTable";
+import CurrencySelector from "../components/ui/CurrencySelector";
 import {
   StatCardSkeleton,
   CardSkeleton,
@@ -25,6 +27,7 @@ import ProtectedRoute from "../components/auth/ProtectedRoute";
 
 const PensionPage = () => {
   const { isLoading, isEmpty, data } = useDataState();
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const pensionData = data.pension;
   const [activeTab, setActiveTab] = useState<
     "overview" | "contributions" | "projections"
@@ -33,7 +36,7 @@ const PensionPage = () => {
   const statCards = [
     {
       title: "Total Contributions",
-      value: formatCurrency(pensionData.totalContributions),
+      value: formatCurrencyWithSymbol(pensionData.totalContributions, selectedCurrency),
       icon: faMoneyBillWave,
       iconColor: "text-[#d4af37]",
       valueColor: "text-[#d4af37]",
@@ -47,7 +50,7 @@ const PensionPage = () => {
     },
     {
       title: "Estimated Benefits",
-      value: formatCurrency(pensionData.estimatedRetirementBenefit),
+      value: formatCurrencyWithSymbol(pensionData.estimatedRetirementBenefit, selectedCurrency),
       icon: faChartLine,
       iconColor: "text-[#6a0dad]",
       valueColor: "text-[#6a0dad]",
@@ -72,7 +75,7 @@ const PensionPage = () => {
       title: "Amount",
       render: (value: unknown) => (
         <span className="font-semibold text-[#d4af37]">
-          {formatCurrency(Number(value))}
+          {formatCurrencyWithSymbol(Number(value), selectedCurrency)}
         </span>
       ),
     },
@@ -100,10 +103,16 @@ const PensionPage = () => {
                 Plan for your retirement with our comprehensive pension scheme
               </p>
             </div>
-            <button className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200">
-              <FontAwesomeIcon icon={faPlus} />
-              <span>Make Contribution</span>
-            </button>
+            <div className="flex items-center space-x-4">
+              <CurrencySelector
+                selectedCurrency={selectedCurrency}
+                onCurrencyChange={setSelectedCurrency}
+              />
+              <button className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200">
+                <FontAwesomeIcon icon={faPlus} />
+                <span>Make Contribution</span>
+              </button>
+            </div>
           </div>
 
           {/* Pension Overview */}
@@ -168,7 +177,7 @@ const PensionPage = () => {
                             Total Contributed:
                           </span>
                           <span className="text-[#e0e0e0] font-semibold">
-                            {formatCurrency(pensionData.totalContributions)}
+                            {formatCurrencyWithSymbol(pensionData.totalContributions, selectedCurrency)}
                           </span>
                         </div>
                       </div>
@@ -219,7 +228,7 @@ const PensionPage = () => {
                           Total Contributed:
                         </span>
                         <span className="text-[#e0e0e0] font-semibold">
-                          {formatCurrency(pensionData.totalContributions)}
+                          {formatCurrencyWithSymbol(pensionData.totalContributions, selectedCurrency)}
                         </span>
                       </div>
                       <div className="flex justify-between">
@@ -227,8 +236,9 @@ const PensionPage = () => {
                           Estimated Benefits:
                         </span>
                         <span className="text-[#d4af37] font-semibold">
-                          {formatCurrency(
-                            pensionData.estimatedRetirementBenefit
+                          {formatCurrencyWithSymbol(
+                            pensionData.estimatedRetirementBenefit,
+                            selectedCurrency
                           )}
                         </span>
                       </div>
@@ -278,7 +288,7 @@ const PensionPage = () => {
                   </h3>
                   <p className="text-[#a0a0a0]">
                     {isEmpty ||
-                    pensionData.subscriptionStatus === "Not Subscribed"
+                      pensionData.subscriptionStatus === "Not Subscribed"
                       ? "Subscribe to a pension plan to start making contributions."
                       : "You haven't made any contributions yet. Make your first contribution to get started."}
                   </p>
@@ -333,7 +343,7 @@ const PensionPage = () => {
 
                       <button className="w-full bg-[#6a0dad] hover:bg-[#8a2dd3] text-white py-3 rounded-lg transition-colors duration-200">
                         {isEmpty ||
-                        pensionData.subscriptionStatus === "Not Subscribed"
+                          pensionData.subscriptionStatus === "Not Subscribed"
                           ? "Get Projection Estimate"
                           : "Calculate Projections"}
                       </button>
@@ -346,7 +356,7 @@ const PensionPage = () => {
                     </h2>
 
                     {isEmpty ||
-                    pensionData.subscriptionStatus === "Not Subscribed" ? (
+                      pensionData.subscriptionStatus === "Not Subscribed" ? (
                       <div className="text-center py-8">
                         <FontAwesomeIcon
                           icon={faChartLine}
@@ -367,8 +377,9 @@ const PensionPage = () => {
                             At Age 60
                           </p>
                           <p className="text-2xl font-bold text-[#d4af37]">
-                            {formatCurrency(
-                              pensionData.estimatedRetirementBenefit * 0.8
+                            {formatCurrencyWithSymbol(
+                              pensionData.estimatedRetirementBenefit * 0.8,
+                              selectedCurrency
                             )}
                           </p>
                         </div>
@@ -378,8 +389,9 @@ const PensionPage = () => {
                             At Age 65
                           </p>
                           <p className="text-2xl font-bold text-[#d4af37]">
-                            {formatCurrency(
-                              pensionData.estimatedRetirementBenefit
+                            {formatCurrencyWithSymbol(
+                              pensionData.estimatedRetirementBenefit,
+                              selectedCurrency
                             )}
                           </p>
                         </div>
@@ -389,8 +401,9 @@ const PensionPage = () => {
                             At Age 70
                           </p>
                           <p className="text-2xl font-bold text-[#d4af37]">
-                            {formatCurrency(
-                              pensionData.estimatedRetirementBenefit * 1.2
+                            {formatCurrencyWithSymbol(
+                              pensionData.estimatedRetirementBenefit * 1.2,
+                              selectedCurrency
                             )}
                           </p>
                         </div>
