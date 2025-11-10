@@ -64,11 +64,16 @@ const SidePanel = React.memo(() => {
         <div className="mb-10">
           {/* Mobile close button and logo */}
           <div className="flex items-center justify-between lg:justify-center">
-            <h1 className="text-3xl font-bold">
+            {/* <h1 className="text-3xl font-bold">
               <span className="text-[#d4af37]">KA</span>
               <span className="text-[#6a0dad]">$</span>
               <span className="text-[#d4af37]">HDA</span>
-            </h1>
+            </h1> */}
+            <img
+              src="/assets/kashda_logo.png"
+              alt="logo"
+              className=" w-[150px]"
+            />
             <button
               onClick={closeSidebar}
               className="lg:hidden text-[#e0e0e0] text-xl p-2 hover:text-[#6a0dad] focus:outline-none transition-colors duration-200"

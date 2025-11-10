@@ -30,8 +30,8 @@ import { useRouter } from "next/navigation";
 import Login from "./components/forms/Login";
 import Modal from "./components/ui/Modal";
 import SignUp from "./components/forms/SignUp";
-import amuzuImg from '@/app/assets/amuzu.jpg';
-import aymeneImg from '@/app/assets/Aymene.jpeg';
+import amuzuImg from "@/app/assets/amuzu.jpg";
+import aymeneImg from "@/app/assets/Aymene.jpeg";
 
 // Then use: image: amuzuImg
 
@@ -73,11 +73,16 @@ export default function HomePage() {
         <nav className="container mx-auto flex items-center justify-between">
           {/* KASHDA Logo */}
           <a href="#" className="flex items-center space-x-2">
-            <h1 className="text-3xl font-bold">
+            {/* <h1 className="text-3xl font-bold">
               <span className="text-[#d4af37]">KA</span>
               <span className="text-[#6a0dad]">$</span>
               <span className="text-[#d4af37]">HDA</span>
-            </h1>
+            </h1> */}
+            <img
+              src="/assets/kashda_logo.png"
+              alt="logo"
+              className=" w-[150px]"
+            />
           </a>
 
           {/* Navigation Links */}
@@ -163,10 +168,10 @@ export default function HomePage() {
           </h2>
           <p className="text-lg text-[#e0e0e0] leading-relaxed mb-6">
             Our vision is to address the low quality and limited scope of
-            financial services in Algeria, which often fail to meet modern user demands.
-            We deliver fair, high-quality, and accessible financial services by building
-            upon the existing infrastructure and promoting advanced digital usage.
-
+            financial services in Algeria, which often fail to meet modern user
+            demands. We deliver fair, high-quality, and accessible financial
+            services by building upon the existing infrastructure and promoting
+            advanced digital usage.
           </p>
         </div>
       </section>
@@ -179,13 +184,25 @@ export default function HomePage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-[#2a004a] flex flex-col justify-center items-center border border-[#4a007a] p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
-              <img src="/assets/Danny.jpeg" alt="Amuzu David" className="w-[250px] h-[250px] object-cover rounded-xl mb-4" />
-              <h3 className="text-xl font-semibold text-[#e0e0e0] mb-2">Amuzu David</h3>
+              <img
+                src="/assets/Danny.jpeg"
+                alt="Amuzu David"
+                className="w-[250px] h-[250px] object-cover rounded-xl mb-4"
+              />
+              <h3 className="text-xl font-semibold text-[#e0e0e0] mb-2">
+                Amuzu David
+              </h3>
               <p className="text-[#a0a0a0]">Strategist</p>
             </div>
             <div className="bg-[#2a004a] flex flex-col justify-center items-center border border-[#4a007a] p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
-              <img src="/assets/Aymene.jpeg" alt="Bouhaouya Aymene" className="w-[250px] h-[250px] object-cover rounded-xl mb-4" />
-              <h3 className="text-xl font-semibold text-[#e0e0e0] mb-2">Bouhaouya Aymene</h3>
+              <img
+                src="/assets/Aymene.jpeg"
+                alt="Bouhaouya Aymene"
+                className="w-[250px] h-[250px] object-cover rounded-xl mb-4"
+              />
+              <h3 className="text-xl font-semibold text-[#e0e0e0] mb-2">
+                Bouhaouya Aymene
+              </h3>
               <p className="text-[#a0a0a0]">Finance</p>
             </div>
           </div>
@@ -287,7 +304,11 @@ export default function HomePage() {
 
           {/* Description */}
           <p className="text-white text-base md:text-lg lg:text-xl text-center max-w-5xl mx-auto mb-16 leading-relaxed">
-            KA$HDA is a mobile money platform in Algeria that enables money transfers, deposits, and online payments, designed for students, workers, and the unemployed. It promotes financial inclusion by offering accessible services to the unbanked and facilitates the management of daily transactions.
+            KA$HDA is a mobile money platform in Algeria that enables money
+            transfers, deposits, and online payments, designed for students,
+            workers, and the unemployed. It promotes financial inclusion by
+            offering accessible services to the unbanked and facilitates the
+            management of daily transactions.
           </p>
 
           {/* Statistics Grid */}
@@ -395,9 +416,7 @@ export default function HomePage() {
               <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
                 1
               </div>
-              <p className="text-white text-lg md:text-xl">
-                million
-              </p>
+              <p className="text-white text-lg md:text-xl">million</p>
             </div>
 
             {/* e-commerce */}
@@ -414,9 +433,7 @@ export default function HomePage() {
               <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
                 2,5
               </div>
-              <p className="text-white text-lg md:text-xl">
-                million
-              </p>
+              <p className="text-white text-lg md:text-xl">million</p>
             </div>
 
             {/* supermarkets */}
@@ -433,9 +450,7 @@ export default function HomePage() {
               <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
                 232,500
               </div>
-              <p className="text-white text-lg md:text-xl">
-                entities
-              </p>
+              <p className="text-white text-lg md:text-xl">entities</p>
             </div>
 
             {/* utility */}
@@ -452,9 +467,7 @@ export default function HomePage() {
               <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
                 10
               </div>
-              <p className="text-white text-lg md:text-xl">
-                entities
-              </p>
+              <p className="text-white text-lg md:text-xl">entities</p>
             </div>
 
             {/* telecom */}
@@ -471,9 +484,7 @@ export default function HomePage() {
               <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
                 4
               </div>
-              <p className="text-white text-lg md:text-xl">
-                entities
-              </p>
+              <p className="text-white text-lg md:text-xl">entities</p>
             </div>
 
             {/* enterprises */}
@@ -490,9 +501,7 @@ export default function HomePage() {
               <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
                 650
               </div>
-              <p className="text-white text-lg md:text-xl">
-                thousand entities
-              </p>
+              <p className="text-white text-lg md:text-xl">thousand entities</p>
             </div>
 
             {/* financial services */}
@@ -509,9 +518,7 @@ export default function HomePage() {
               <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
                 21
               </div>
-              <p className="text-white text-lg md:text-xl">
-                institutions
-              </p>
+              <p className="text-white text-lg md:text-xl">institutions</p>
             </div>
           </div>
         </div>
