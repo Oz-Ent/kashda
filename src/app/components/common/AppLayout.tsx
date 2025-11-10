@@ -12,7 +12,7 @@ interface AppLayoutProps {
 const AppLayout = React.memo(({ children }: AppLayoutProps) => {
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen bg-[#2a004a] text-[#e0e0e0] font-inter">
+      <div className="flex max-h-screen bg-[#2a004a] text-[#e0e0e0] font-inter">
         <SidePanel />
         <div className="flex flex-col flex-1 lg:ml-0">
           <Header />
