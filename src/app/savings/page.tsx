@@ -100,19 +100,6 @@ const SavingsPage = () => {
 
               {/* Modal content */}
               <div className="relative bg-[#3a005f] border border-[#4a007a] p-6 rounded-xl shadow-2xl max-w-lg w-full mx-4">
-                <div className="flex justify-between items-center mb-4">
-                  <div className="flex items-center justify-center">
-                    <h2 className="text-xl font-semibold text-[#e0e0e0] text-center">
-                      Create New Savings Plan
-                    </h2>
-                  </div>
-                  <button
-                    onClick={() => setNewSavingsForm(false)}
-                    className="text-[#a0a0a0] hover:text-[#e0e0e0] transition-colors duration-200 cursor-pointer"
-                  >
-                    <FontAwesomeIcon icon={faTimes} />
-                  </button>
-                </div>
 
                 {/* Form content will go here */}
                 <NewSavingsForm onClose={() => setNewSavingsForm(false)} />
