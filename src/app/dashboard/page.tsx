@@ -67,7 +67,7 @@ const DashboardPage = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:flex-col">
             {/* Balance Cards */}
             {isLoading ? (
               <CardSkeleton className="h-32" />

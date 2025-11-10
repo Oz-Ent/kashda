@@ -9,11 +9,20 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import {
   faBars,
+  faBuilding,
+  faCar,
   faChartPie,
   faHandHoldingUsd,
+  faHardHat,
   faMobileAlt,
   faShieldAlt,
+  faShoppingCart,
   faUmbrellaBeach,
+  faUser,
+  faUserGraduate,
+  faUsers,
+  faUtensils,
+  faWifi,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
@@ -21,6 +30,10 @@ import { useRouter } from "next/navigation";
 import Login from "./components/forms/Login";
 import Modal from "./components/ui/Modal";
 import SignUp from "./components/forms/SignUp";
+import amuzuImg from '@/app/assets/amuzu.jpg';
+import aymeneImg from '@/app/assets/Aymene.jpeg';
+
+// Then use: image: amuzuImg
 
 export default function HomePage() {
   // const { redirect } = useStaticRedirect();
@@ -82,16 +95,22 @@ export default function HomePage() {
               Services
             </a>
             <a
+              href="#clients"
+              className="text-[#e0e0e0] hover:text-[#d4af37] font-medium transition-colors duration-200"
+            >
+              Our Clients
+            </a>
+            <a
+              href="#partners"
+              className="text-[#e0e0e0] hover:text-[#d4af37] font-medium transition-colors duration-200"
+            >
+              Our Partners
+            </a>
+            <a
               href="#about"
               className="text-[#e0e0e0] hover:text-[#d4af37] font-medium transition-colors duration-200"
             >
               About Us
-            </a>
-            <a
-              href="#"
-              className="text-[#e0e0e0] hover:text-[#d4af37] font-medium transition-colors duration-200"
-            >
-              Contact
             </a>
           </div>
 
@@ -134,6 +153,42 @@ export default function HomePage() {
           >
             Get Started Today
           </button>
+        </div>
+      </section>
+
+      <section id="about" className="py-16 bg-[#2a004a]">
+        <div className="container mx-auto px-4 text-center max-w-3xl">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-[#d4af37]">
+            Our Vision
+          </h2>
+          <p className="text-lg text-[#e0e0e0] leading-relaxed mb-6">
+            Our vision is to address the low quality and limited scope of
+            financial services in Algeria, which often fail to meet modern user demands.
+            We deliver fair, high-quality, and accessible financial services by building
+            upon the existing infrastructure and promoting advanced digital usage.
+
+          </p>
+        </div>
+      </section>
+
+      {/* The Team Section */}
+      <section id="team" className="py-16 bg-[#3a005f]">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#d4af37]">
+            The Team
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-[#2a004a] flex flex-col justify-center items-center border border-[#4a007a] p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
+              <img src="/assets/Danny.jpeg" alt="Amuzu David" className="w-[250px] h-[250px] object-cover rounded-xl mb-4" />
+              <h3 className="text-xl font-semibold text-[#e0e0e0] mb-2">Amuzu David</h3>
+              <p className="text-[#a0a0a0]">Strategist</p>
+            </div>
+            <div className="bg-[#2a004a] flex flex-col justify-center items-center border border-[#4a007a] p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
+              <img src="/assets/Aymene.jpeg" alt="Bouhaouya Aymene" className="w-[250px] h-[250px] object-cover rounded-xl mb-4" />
+              <h3 className="text-xl font-semibold text-[#e0e0e0] mb-2">Bouhaouya Aymene</h3>
+              <p className="text-[#a0a0a0]">Finance</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -216,6 +271,246 @@ export default function HomePage() {
               <p className="text-[#a0a0a0]">
                 Simplify your payments for taxes, levies, and other government
                 revenues with ease.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Clients Section */}
+      <section id="clients" className="py-16 bg-[#3a005f]">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <h2 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-8">
+            Our Clients
+          </h2>
+
+          {/* Description */}
+          <p className="text-white text-base md:text-lg lg:text-xl text-center max-w-5xl mx-auto mb-16 leading-relaxed">
+            KA$HDA is a mobile money platform in Algeria that enables money transfers, deposits, and online payments, designed for students, workers, and the unemployed. It promotes financial inclusion by offering accessible services to the unbanked and facilitates the management of daily transactions.
+          </p>
+
+          {/* Statistics Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
+            {/* Students */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6">
+                <FontAwesomeIcon
+                  icon={faUserGraduate}
+                  className="text-blue-900 text-6xl md:text-7xl lg:text-6xl"
+                />
+              </div>
+              <h3 className="text-white text-xl md:text-xl font-semibold mb-8">
+                Students
+              </h3>
+              <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
+                8
+              </div>
+              <p className="text-white text-lg md:text-xl">
+                million inhabitants
+              </p>
+            </div>
+
+            {/* Workers and Unemployed */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6">
+                <FontAwesomeIcon
+                  icon={faHardHat}
+                  className="text-blue-900 text-6xl md:text-7xl lg:text-6xl"
+                />
+              </div>
+              <h3 className="text-white text-xl md:text-xl font-semibold mb-8">
+                The Working Class
+              </h3>
+              <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
+                12
+              </div>
+              <p className="text-white text-lg md:text-xl">
+                million inhabitants
+              </p>
+            </div>
+
+            {/* Unbanked Population */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6">
+                <FontAwesomeIcon
+                  icon={faUsers}
+                  className="text-blue-900 text-6xl md:text-7xl lg:text-6xl"
+                />
+              </div>
+              <h3 className="text-white text-xl md:text-xl font-semibold mb-8">
+                Unbanked Population
+              </h3>
+              <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
+                15
+              </div>
+              <p className="text-white text-lg md:text-xl">
+                million inhabitants
+              </p>
+            </div>
+
+            {/* Entrepreneurs */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6">
+                <FontAwesomeIcon
+                  icon={faUser}
+                  className="text-blue-900 text-6xl md:text-7xl lg:text-6xl"
+                />
+              </div>
+              <h3 className="text-white text-xl md:text-xl font-semibold mb-8">
+                Entrepreneurs
+              </h3>
+              <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
+                350
+              </div>
+              <p className="text-white text-lg md:text-xl">
+                thousand entrepreneurs
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Partners Section */}
+      <section id="partners" className="py-16 bg-[#2a004a]">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <h2 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-8">
+            Our Partners
+          </h2>
+
+          {/* Statistics Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
+            {/* transport services */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6">
+                <FontAwesomeIcon
+                  icon={faCar}
+                  className="text-blue-900 text-6xl md:text-7xl lg:text-6xl"
+                />
+              </div>
+              <h3 className="text-white text-xl md:text-xl font-semibold mb-8">
+                Private Transport Services
+              </h3>
+              <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
+                1
+              </div>
+              <p className="text-white text-lg md:text-xl">
+                million
+              </p>
+            </div>
+
+            {/* e-commerce */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6">
+                <FontAwesomeIcon
+                  icon={faShoppingCart}
+                  className="text-blue-900 text-6xl md:text-7xl lg:text-6xl"
+                />
+              </div>
+              <h3 className="text-white text-xl md:text-xl font-semibold mb-8">
+                E-commerce Services
+              </h3>
+              <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
+                2,5
+              </div>
+              <p className="text-white text-lg md:text-xl">
+                million
+              </p>
+            </div>
+
+            {/* supermarkets */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6">
+                <FontAwesomeIcon
+                  icon={faUtensils}
+                  className="text-blue-900 text-6xl md:text-7xl lg:text-6xl"
+                />
+              </div>
+              <h3 className="text-white text-xl md:text-xl font-semibold mb-8">
+                Shop,Boutique and Restaurants
+              </h3>
+              <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
+                232,500
+              </div>
+              <p className="text-white text-lg md:text-xl">
+                entities
+              </p>
+            </div>
+
+            {/* utility */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6">
+                <FontAwesomeIcon
+                  icon={faMobileAlt}
+                  className="text-blue-900 text-6xl md:text-7xl lg:text-6xl"
+                />
+              </div>
+              <h3 className="text-white text-xl md:text-xl font-semibold mb-8">
+                Utility Services
+              </h3>
+              <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
+                10
+              </div>
+              <p className="text-white text-lg md:text-xl">
+                entities
+              </p>
+            </div>
+
+            {/* telecom */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6">
+                <FontAwesomeIcon
+                  icon={faWifi}
+                  className="text-blue-900 text-6xl md:text-7xl lg:text-6xl"
+                />
+              </div>
+              <h3 className="text-white text-xl md:text-xl font-semibold mb-8">
+                Telecommunication Services
+              </h3>
+              <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
+                4
+              </div>
+              <p className="text-white text-lg md:text-xl">
+                entities
+              </p>
+            </div>
+
+            {/* enterprises */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6">
+                <FontAwesomeIcon
+                  icon={faBuilding}
+                  className="text-blue-900 text-6xl md:text-7xl lg:text-6xl"
+                />
+              </div>
+              <h3 className="text-white text-xl md:text-xl font-semibold mb-8">
+                Enterprises
+              </h3>
+              <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
+                650
+              </div>
+              <p className="text-white text-lg md:text-xl">
+                thousand entities
+              </p>
+            </div>
+
+            {/* financial services */}
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-6">
+                <FontAwesomeIcon
+                  icon={faHandHoldingUsd}
+                  className="text-blue-900 text-6xl md:text-7xl lg:text-6xl"
+                />
+              </div>
+              <h3 className="text-white text-xl md:text-xl font-semibold mb-8">
+                Financial Services
+              </h3>
+              <div className="text-white text-6xl md:text-7xl lg:text-6xl font-bold mb-2">
+                21
+              </div>
+              <p className="text-white text-lg md:text-xl">
+                institutions
               </p>
             </div>
           </div>
