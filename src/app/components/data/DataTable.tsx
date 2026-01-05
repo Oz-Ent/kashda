@@ -24,21 +24,21 @@ const DataTable = <T extends Record<string, unknown>>({
 }: DataTableProps<T>) => {
   if (data.length === 0) {
     return (
-      <div className="text-center py-8">
-        <p className="text-[#a0a0a0]">{emptyMessage}</p>
+      <div className="text-center py-6 md:py-8">
+        <p className="text-xs md:text-sm text-[#a0a0a0]">{emptyMessage}</p>
       </div>
     );
   }
 
   return (
-    <div className={`overflow-x-auto ${className}`}>
+    <div className={`overflow-x-auto -mx-2 md:mx-0 ${className}`}>
       <table className="min-w-full text-left text-[#e0e0e0]">
         <thead>
           <tr className="border-b border-gray-700">
             {columns.map((column) => (
               <th
                 key={column.key}
-                className={`py-2 px-4 text-sm font-semibold text-[#a0a0a0] ${
+                className={`py-2 px-2 md:px-4 text-xs md:text-sm font-semibold text-[#a0a0a0] ${
                   column.className || ""
                 }`}
               >
@@ -56,7 +56,9 @@ const DataTable = <T extends Record<string, unknown>>({
               {columns.map((column) => (
                 <td
                   key={column.key}
-                  className={`py-3 px-4 text-sm ${column.className || ""}`}
+                  className={`py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm ${
+                    column.className || ""
+                  }`}
                 >
                   {column.render
                     ? column.render(row[column.key], row)

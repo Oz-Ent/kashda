@@ -1,6 +1,7 @@
 "use client";
 
-import { getSettingsData, getUserData } from "@/lib/dataUtils";
+import { useAuth } from "@/contexts/AuthContext";
+import { getSettingsData } from "@/lib/dataUtils";
 import {
   faBell,
   faCog,
@@ -14,13 +15,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import AppLayout from "../components/common/AppLayout";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
-import { useAuth } from "@/contexts/AuthContext";
+import AppLayout from "../components/common/AppLayout";
 
 const SettingsPage = () => {
   const settingsData = getSettingsData();
-  const userData = getUserData();
   const [activeTab, setActiveTab] = useState<
     "profile" | "notifications" | "security" | "preferences"
   >("profile");
@@ -40,57 +39,61 @@ const SettingsPage = () => {
   return (
     <ProtectedRoute>
       <AppLayout>
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
+        <div className="space-y-4 md:space-y-6">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-[#e0e0e0] mb-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#e0e0e0] mb-1 md:mb-2">
                 Settings
               </h1>
-              <p className="text-[#a0a0a0]">
+              <p className="text-xs md:text-sm text-[#a0a0a0]">
                 Manage your account preferences and security settings
               </p>
             </div>
-            <button className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200">
+            <button className="w-full md:w-auto bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center justify-center md:justify-start space-x-2 transition-colors duration-200 text-sm md:text-base">
               <FontAwesomeIcon icon={faCog} />
               <span>Save Changes</span>
             </button>
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex space-x-1 bg-[#2a004a] rounded-lg p-1">
+          <div className="flex flex-col md:flex-row md:space-x-1 gap-2 md:gap-0 bg-[#2a004a] rounded-lg p-1">
             <button
               onClick={() => setActiveTab("profile")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${activeTab === "profile"
-                ? "bg-[#6a0dad] text-white"
-                : "text-[#a0a0a0] hover:text-[#e0e0e0]"
-                }`}
+              className={`flex-1 py-2 px-3 md:px-4 rounded-md text-xs md:text-sm font-medium transition-colors duration-200 ${
+                activeTab === "profile"
+                  ? "bg-[#6a0dad] text-white"
+                  : "text-[#a0a0a0] hover:text-[#e0e0e0]"
+              }`}
             >
               Profile
             </button>
             <button
               onClick={() => setActiveTab("notifications")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${activeTab === "notifications"
-                ? "bg-[#6a0dad] text-white"
-                : "text-[#a0a0a0] hover:text-[#e0e0e0]"
-                }`}
+              className={`flex-1 py-2 px-3 md:px-4 rounded-md text-xs md:text-sm font-medium transition-colors duration-200 ${
+                activeTab === "notifications"
+                  ? "bg-[#6a0dad] text-white"
+                  : "text-[#a0a0a0] hover:text-[#e0e0e0]"
+              }`}
             >
               Notifications
             </button>
             <button
               onClick={() => setActiveTab("security")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${activeTab === "security"
-                ? "bg-[#6a0dad] text-white"
-                : "text-[#a0a0a0] hover:text-[#e0e0e0]"
-                }`}
+              className={`flex-1 py-2 px-3 md:px-4 rounded-md text-xs md:text-sm font-medium transition-colors duration-200 ${
+                activeTab === "security"
+                  ? "bg-[#6a0dad] text-white"
+                  : "text-[#a0a0a0] hover:text-[#e0e0e0]"
+              }`}
             >
               Security
             </button>
             <button
               onClick={() => setActiveTab("preferences")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${activeTab === "preferences"
-                ? "bg-[#6a0dad] text-white"
-                : "text-[#a0a0a0] hover:text-[#e0e0e0]"
-                }`}
+              className={`flex-1 py-2 px-3 md:px-4 rounded-md text-xs md:text-sm font-medium transition-colors duration-200 ${
+                activeTab === "preferences"
+                  ? "bg-[#6a0dad] text-white"
+                  : "text-[#a0a0a0] hover:text-[#e0e0e0]"
+              }`}
             >
               Preferences
             </button>
@@ -98,14 +101,14 @@ const SettingsPage = () => {
 
           {/* Profile Tab */}
           {activeTab === "profile" && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-[#3a005f] border border-[#4a007a] p-6 rounded-xl shadow-lg">
-                <div className="flex items-center mb-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+              <div className="bg-[#3a005f] border border-[#4a007a] p-4 md:p-6 rounded-xl shadow-lg">
+                <div className="flex items-center mb-3 md:mb-4">
                   <FontAwesomeIcon
                     icon={faUser}
-                    className="text-[#d4af37] mr-3 text-xl"
+                    className="text-[#d4af37] mr-3 text-lg md:text-xl"
                   />
-                  <h2 className="text-xl font-semibold text-[#e0e0e0]">
+                  <h2 className="text-lg md:text-xl font-semibold text-[#e0e0e0]">
                     Personal Information
                   </h2>
                 </div>
@@ -117,7 +120,9 @@ const SettingsPage = () => {
                     </label>
                     <input
                       type="text"
-                      defaultValue={loggedInUser?.firstName + " " + loggedInUser?.lastName}
+                      defaultValue={
+                        loggedInUser?.firstName + " " + loggedInUser?.lastName
+                      }
                       className="w-full p-3 rounded-lg bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] focus:outline-none focus:ring-2 focus:ring-[#6a0dad]"
                     />
                   </div>
@@ -139,15 +144,17 @@ const SettingsPage = () => {
                     </label>
                     <input
                       type="tel"
-                      defaultValue={loggedInUser?.phoneNumber ?? "No phone number"}
+                      defaultValue={
+                        loggedInUser?.phoneNumber ?? "No phone number"
+                      }
                       className="w-full p-3 rounded-lg bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] focus:outline-none focus:ring-2 focus:ring-[#6a0dad]"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="bg-[#3a005f] border border-[#4a007a] p-6 rounded-xl shadow-lg">
-                <h2 className="text-xl font-semibold text-[#e0e0e0] mb-4">
+              <div className="bg-[#3a005f] border border-[#4a007a] p-4 md:p-6 rounded-xl shadow-lg">
+                <h2 className="text-lg md:text-xl font-semibold text-[#e0e0e0] mb-3 md:mb-4">
                   Profile Picture
                 </h2>
 
@@ -155,18 +162,18 @@ const SettingsPage = () => {
                   <img
                     src={"null"}
                     alt="Profile"
-                    className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-[#d4af37]"
+                    className="w-16 md:w-24 h-16 md:h-24 rounded-full mx-auto mb-3 md:mb-4 border-4 border-[#d4af37]"
                   />
-                  <button className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg transition-colors duration-200">
+                  <button className="w-full md:w-auto bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg transition-colors duration-200 text-sm md:text-base">
                     Change Picture
                   </button>
                 </div>
 
-                <div className="mt-6 space-y-3">
-                  <button className="w-full bg-[#4a007a] hover:bg-[#6a0dad] text-[#e0e0e0] py-2 rounded-lg transition-colors duration-200">
+                <div className="mt-4 md:mt-6 space-y-2 md:space-y-3">
+                  <button className="w-full bg-[#4a007a] hover:bg-[#6a0dad] text-[#e0e0e0] py-2 rounded-lg transition-colors duration-200 text-sm md:text-base">
                     Update Profile
                   </button>
-                  <button className="w-full bg-red-500/20 hover:bg-red-500/30 text-red-400 py-2 rounded-lg transition-colors duration-200">
+                  <button className="w-full bg-red-500/20 hover:bg-red-500/30 text-red-400 py-2 rounded-lg transition-colors duration-200 text-sm md:text-base">
                     Delete Account
                   </button>
                 </div>
@@ -176,30 +183,30 @@ const SettingsPage = () => {
 
           {/* Notifications Tab */}
           {activeTab === "notifications" && (
-            <div className="bg-[#3a005f] border border-[#4a007a] p-6 rounded-xl shadow-lg">
-              <div className="flex items-center mb-6">
+            <div className="bg-[#3a005f] border border-[#4a007a] p-4 md:p-6 rounded-xl shadow-lg">
+              <div className="flex items-center mb-4 md:mb-6">
                 <FontAwesomeIcon
                   icon={faBell}
-                  className="text-[#d4af37] mr-3 text-xl"
+                  className="text-[#d4af37] mr-3 text-lg md:text-xl"
                 />
-                <h2 className="text-xl font-semibold text-[#e0e0e0]">
+                <h2 className="text-lg md:text-xl font-semibold text-[#e0e0e0]">
                   Notification Preferences
                 </h2>
               </div>
 
-              <div className="space-y-6">
-                <div className="flex justify-between items-center py-3 border-b border-[#4a007a]">
-                  <div>
-                    <h3 className="text-[#e0e0e0] font-medium">
+              <div className="space-y-4 md:space-y-6">
+                <div className="flex flex-col md:flex-row md:justify-between md:items-center py-3 border-b border-[#4a007a] gap-3">
+                  <div className="flex-1">
+                    <h3 className="text-sm md:text-base text-[#e0e0e0] font-medium">
                       Email Notifications
                     </h3>
-                    <p className="text-sm text-[#a0a0a0]">
+                    <p className="text-xs md:text-sm text-[#a0a0a0]">
                       Receive notifications via email
                     </p>
                   </div>
                   <button
                     onClick={() => toggleSetting("notifications", "email")}
-                    className="text-2xl focus:outline-none"
+                    className="text-xl md:text-2xl focus:outline-none flex-shrink-0"
                   >
                     <FontAwesomeIcon
                       icon={

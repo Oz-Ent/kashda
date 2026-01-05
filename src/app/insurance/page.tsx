@@ -1,28 +1,28 @@
 "use client";
 
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDataState } from "@/hooks/useDataState";
+import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
+import { formatDate } from "@/lib/formatUtils";
 import {
-  faShieldAlt,
-  faPlus,
   faCalendarAlt,
   faCheckCircle,
+  faEdit,
+  faExclamationTriangle,
   faInfoCircle,
   faMoneyBillWave,
-  faEdit,
+  faPlus,
+  faShieldAlt,
   faTrash,
-  faExclamationTriangle,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDataState } from "@/hooks/useDataState";
-import { formatCurrency, formatDate } from "@/lib/formatUtils";
-import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import ProtectedRoute from "../components/auth/ProtectedRoute";
 import AppLayout from "../components/common/AppLayout";
 import CurrencySelector from "../components/ui/CurrencySelector";
 import {
-  StatCardSkeleton,
   CardSkeleton,
+  StatCardSkeleton,
 } from "../components/ui/LoadingSkeleton";
-import ProtectedRoute from "../components/auth/ProtectedRoute";
 
 const InsurancePage = () => {
   const { isLoading, isEmpty, data } = useDataState();
@@ -47,22 +47,24 @@ const InsurancePage = () => {
   return (
     <ProtectedRoute>
       <AppLayout>
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
+        <div className="space-y-4 md:space-y-6">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-[#e0e0e0] mb-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#e0e0e0] mb-1 md:mb-2">
                 Insurance Plans
               </h1>
-              <p className="text-[#a0a0a0]">
+              <p className="text-xs md:text-sm text-[#a0a0a0]">
                 Protect yourself and your loved ones with our insurance coverage
               </p>
             </div>
-            <div className="flex items-center space-x-4">
-              <CurrencySelector
-                selectedCurrency={selectedCurrency}
-                onCurrencyChange={setSelectedCurrency}
-              />
-              <button className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200">
+            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 w-full md:w-auto">
+              <div className="w-full md:w-auto">
+                <CurrencySelector
+                  selectedCurrency={selectedCurrency}
+                  onCurrencyChange={setSelectedCurrency}
+                />
+              </div>
+              <button className="w-full md:w-auto bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center justify-center md:justify-start space-x-2 transition-colors duration-200 text-sm md:text-base">
                 <FontAwesomeIcon icon={faPlus} />
                 <span>New Plan</span>
               </button>
@@ -129,19 +131,21 @@ const InsurancePage = () => {
           <div className="flex space-x-1 bg-[#2a004a] rounded-lg p-1">
             <button
               onClick={() => setActiveTab("current")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${activeTab === "current"
-                ? "bg-[#6a0dad] text-white"
-                : "text-[#a0a0a0] hover:text-[#e0e0e0]"
-                }`}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
+                activeTab === "current"
+                  ? "bg-[#6a0dad] text-white"
+                  : "text-[#a0a0a0] hover:text-[#e0e0e0]"
+              }`}
             >
               Current Plans
             </button>
             <button
               onClick={() => setActiveTab("available")}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${activeTab === "available"
-                ? "bg-[#6a0dad] text-white"
-                : "text-[#a0a0a0] hover:text-[#e0e0e0]"
-                }`}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
+                activeTab === "available"
+                  ? "bg-[#6a0dad] text-white"
+                  : "text-[#a0a0a0] hover:text-[#e0e0e0]"
+              }`}
             >
               Available Plans
             </button>
@@ -184,10 +188,11 @@ const InsurancePage = () => {
                   insuranceData.plans.map((plan) => (
                     <div
                       key={plan.id}
-                      className={`bg-[#3a005f] border p-4 rounded-xl cursor-pointer transition-colors duration-200 ${selectedPlan && selectedPlan.id === plan.id
-                        ? "border-[#6a0dad] bg-[#6a0dad]/10"
-                        : "border-[#4a007a] hover:border-[#6a0dad]"
-                        }`}
+                      className={`bg-[#3a005f] border p-4 rounded-xl cursor-pointer transition-colors duration-200 ${
+                        selectedPlan && selectedPlan.id === plan.id
+                          ? "border-[#6a0dad] bg-[#6a0dad]/10"
+                          : "border-[#4a007a] hover:border-[#6a0dad]"
+                      }`}
                       onClick={() => setSelectedPlan(plan)}
                     >
                       <div className="flex justify-between items-start mb-3">
@@ -217,13 +222,20 @@ const InsurancePage = () => {
                         <div>
                           <p className="text-[#a0a0a0]">Coverage</p>
                           <p className="text-[#e0e0e0] font-semibold">
-                            {formatCurrencyWithSymbol(plan.coverage, selectedCurrency)}
+                            {formatCurrencyWithSymbol(
+                              plan.coverage,
+                              selectedCurrency
+                            )}
                           </p>
                         </div>
                         <div>
                           <p className="text-[#a0a0a0]">Premium</p>
                           <p className="text-[#d4af37] font-semibold">
-                            {formatCurrencyWithSymbol(plan.premium, selectedCurrency)}/month
+                            {formatCurrencyWithSymbol(
+                              plan.premium,
+                              selectedCurrency
+                            )}
+                            /month
                           </p>
                         </div>
                       </div>
@@ -286,7 +298,10 @@ const InsurancePage = () => {
                             Coverage Amount
                           </p>
                           <p className="text-2xl font-bold text-[#6a0dad]">
-                            {formatCurrencyWithSymbol(selectedPlan.coverage, selectedCurrency)}
+                            {formatCurrencyWithSymbol(
+                              selectedPlan.coverage,
+                              selectedCurrency
+                            )}
                           </p>
                         </div>
                         <div className="bg-[#2a004a] p-4 rounded-lg">
@@ -294,7 +309,10 @@ const InsurancePage = () => {
                             Monthly Premium
                           </p>
                           <p className="text-2xl font-bold text-[#d4af37]">
-                            {formatCurrencyWithSymbol(selectedPlan.premium, selectedCurrency)}
+                            {formatCurrencyWithSymbol(
+                              selectedPlan.premium,
+                              selectedCurrency
+                            )}
                           </p>
                         </div>
                       </div>
@@ -364,13 +382,19 @@ const InsurancePage = () => {
                       <div className="flex justify-between">
                         <span className="text-[#a0a0a0]">Coverage:</span>
                         <span className="text-[#e0e0e0] font-semibold">
-                          {formatCurrencyWithSymbol(plan.coverage, selectedCurrency)}
+                          {formatCurrencyWithSymbol(
+                            plan.coverage,
+                            selectedCurrency
+                          )}
                         </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#a0a0a0]">Monthly Premium:</span>
                         <span className="text-[#d4af37] font-semibold">
-                          {formatCurrencyWithSymbol(plan.premium, selectedCurrency)}
+                          {formatCurrencyWithSymbol(
+                            plan.premium,
+                            selectedCurrency
+                          )}
                         </span>
                       </div>
                     </div>

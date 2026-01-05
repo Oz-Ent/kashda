@@ -8,7 +8,6 @@ import {
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import {
-  faBars,
   faBuilding,
   faCar,
   faChartPie,
@@ -25,13 +24,11 @@ import {
   faWifi,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Login from "./components/forms/Login";
-import Modal from "./components/ui/Modal";
 import SignUp from "./components/forms/SignUp";
-import amuzuImg from "@/app/assets/amuzu.jpg";
-import aymeneImg from "@/app/assets/Aymene.jpeg";
+import Modal from "./components/ui/Modal";
 
 // Then use: image: amuzuImg
 
@@ -72,12 +69,7 @@ export default function HomePage() {
       <header className="bg-[#3a005f] p-4 shadow-md sticky top-0 z-20 border border-[#4a007a]">
         <nav className="container mx-auto flex items-center justify-between">
           {/* KASHDA Logo */}
-          <a href="#" className="flex items-center space-x-2">
-            {/* <h1 className="text-3xl font-bold">
-              <span className="text-[#d4af37]">KA</span>
-              <span className="text-[#6a0dad]">$</span>
-              <span className="text-[#d4af37]">HDA</span>
-            </h1> */}
+          <a href="#" className="flex items-center space-x-2 mr-2">
             <img
               src="/assets/kashda_logo.png"
               alt="logo"
@@ -123,19 +115,15 @@ export default function HomePage() {
           <div className="flex items-center space-x-4">
             <button
               onClick={handleLoginClick}
-              className="bg-[#4a007a] text-[#e0e0e0] border border-[#4a007a] px-5 py-2 rounded-lg font-semibold shadow-md hover:bg-[#6a0dad] transition-colors duration-200 focus:outline-none"
+              className="bg-[#4a007a] text-[#e0e0e0] border border-[#4a007a] px-3 md:px-5 py-2 rounded-lg font-semibold shadow-md hover:bg-[#6a0dad] transition-colors duration-200 focus:outline-none"
             >
               Login
             </button>
             <button
               onClick={handleSignupClick}
-              className="bg-[#d4af37] text-[#2a004a] px-5 py-2 rounded-lg font-semibold shadow-md hover:bg-[#e6c24d] transition-colors duration-200 focus:outline-none"
+              className="bg-[#d4af37] text-[#2a004a] px-3 md:px-5 py-2 rounded-lg font-semibold shadow-md hover:bg-[#e6c24d] transition-colors duration-200 focus:outline-none text-nowrap"
             >
               Sign Up
-            </button>
-            {/* Mobile Menu Button */}
-            <button className="md:hidden text-[#e0e0e0] text-2xl focus:outline-none">
-              <FontAwesomeIcon icon={faBars} />
             </button>
           </div>
         </nav>
@@ -145,8 +133,8 @@ export default function HomePage() {
       <section className="relative bg-gradient-to-r from-[#3a005f] to-[#2a004a] text-center py-20 md:py-32 flex items-center justify-center">
         <div className="absolute inset-0 bg-[#2a004ab6] bg-opacity-60"></div>
         <div className="relative z-10 text-white px-4 max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6 text-[#d4af37]">
-            Empowering Your Financial Journey
+          <h2 className="text-4xl md:text-6xl font-extrabold leading-tight text-wrap mb-6 text-[#d4af37]">
+            Bringing ease to your financial experience
           </h2>
           <p className="text-lg md:text-xl mb-8">
             KASHDA is your trusted partner for seamless digital banking, smart

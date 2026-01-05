@@ -1,11 +1,6 @@
 "use client";
 
 import React, { useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
 import BalanceCard from "./BalanceCard";
 
 interface Wallet {
@@ -49,7 +44,7 @@ const BalanceCarousel: React.FC<BalanceCarouselProps> = ({
       <div className="relative">
         <div
           ref={carouselRef}
-          className="flex overflow-x-hidden pb-2 space-x-4 scroll-smooth"
+          className="flex flex-wrap lg:flex-nowrap gap-y-1.5 justify-center overflow-x-hidden pb-2 lg:space-x-4 scroll-smooth"
         >
           {wallets.map((wallet) => (
             <BalanceCard
@@ -65,7 +60,7 @@ const BalanceCarousel: React.FC<BalanceCarouselProps> = ({
         </div>
 
         {/* Navigation Buttons */}
-        {wallets.length > 2 && (
+        {/* {wallets.length > 2 && (
           <>
             <button
               onClick={scrollLeft}
@@ -97,7 +92,7 @@ const BalanceCarousel: React.FC<BalanceCarouselProps> = ({
               <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </>
-        )}
+        )} */}
       </div>
     </section>
   );

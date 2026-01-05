@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDataState } from "@/hooks/useDataState";
+import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
+import { formatDate } from "@/lib/formatUtils";
 import {
   faChartLine,
   faDownload,
@@ -10,20 +11,19 @@ import {
   faPlus,
   faUmbrella,
 } from "@fortawesome/free-solid-svg-icons";
-import { formatCurrency, formatDate } from "@/lib/formatUtils";
-import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
-import { useDataState } from "@/hooks/useDataState";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import ProtectedRoute from "../components/auth/ProtectedRoute";
 import AppLayout from "../components/common/AppLayout";
-import { StatCardGrid } from "../components/ui/StatCard";
-import TabNavigation from "../components/ui/TabNavigation";
 import DataTable from "../components/data/DataTable";
 import CurrencySelector from "../components/ui/CurrencySelector";
 import {
-  StatCardSkeleton,
   CardSkeleton,
+  StatCardSkeleton,
   TableSkeleton,
 } from "../components/ui/LoadingSkeleton";
-import ProtectedRoute from "../components/auth/ProtectedRoute";
+import { StatCardGrid } from "../components/ui/StatCard";
+import TabNavigation from "../components/ui/TabNavigation";
 
 const PensionPage = () => {
   const { isLoading, isEmpty, data } = useDataState();
@@ -36,7 +36,10 @@ const PensionPage = () => {
   const statCards = [
     {
       title: "Total Contributions",
-      value: formatCurrencyWithSymbol(pensionData.totalContributions, selectedCurrency),
+      value: formatCurrencyWithSymbol(
+        pensionData.totalContributions,
+        selectedCurrency
+      ),
       icon: faMoneyBillWave,
       iconColor: "text-[#d4af37]",
       valueColor: "text-[#d4af37]",
@@ -50,7 +53,10 @@ const PensionPage = () => {
     },
     {
       title: "Estimated Benefits",
-      value: formatCurrencyWithSymbol(pensionData.estimatedRetirementBenefit, selectedCurrency),
+      value: formatCurrencyWithSymbol(
+        pensionData.estimatedRetirementBenefit,
+        selectedCurrency
+      ),
       icon: faChartLine,
       iconColor: "text-[#6a0dad]",
       valueColor: "text-[#6a0dad]",
@@ -93,22 +99,24 @@ const PensionPage = () => {
   return (
     <ProtectedRoute>
       <AppLayout>
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
+        <div className="space-y-4 md:space-y-6">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-[#e0e0e0] mb-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#e0e0e0] mb-1 md:mb-2">
                 Pension Scheme
               </h1>
-              <p className="text-[#a0a0a0]">
+              <p className="text-xs md:text-sm text-[#a0a0a0]">
                 Plan for your retirement with our comprehensive pension scheme
               </p>
             </div>
-            <div className="flex items-center space-x-4">
-              <CurrencySelector
-                selectedCurrency={selectedCurrency}
-                onCurrencyChange={setSelectedCurrency}
-              />
-              <button className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200">
+            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 w-full md:w-auto">
+              <div className="w-full md:w-auto">
+                <CurrencySelector
+                  selectedCurrency={selectedCurrency}
+                  onCurrencyChange={setSelectedCurrency}
+                />
+              </div>
+              <button className="w-full md:w-auto bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center justify-center md:justify-start space-x-2 transition-colors duration-200 text-sm md:text-base">
                 <FontAwesomeIcon icon={faPlus} />
                 <span>Make Contribution</span>
               </button>
@@ -139,7 +147,7 @@ const PensionPage = () => {
 
           {/* Overview Tab */}
           {activeTab === "overview" && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6\">
               {isLoading ? (
                 <>
                   <CardSkeleton />
@@ -177,7 +185,10 @@ const PensionPage = () => {
                             Total Contributed:
                           </span>
                           <span className="text-[#e0e0e0] font-semibold">
-                            {formatCurrencyWithSymbol(pensionData.totalContributions, selectedCurrency)}
+                            {formatCurrencyWithSymbol(
+                              pensionData.totalContributions,
+                              selectedCurrency
+                            )}
                           </span>
                         </div>
                       </div>
@@ -228,7 +239,10 @@ const PensionPage = () => {
                           Total Contributed:
                         </span>
                         <span className="text-[#e0e0e0] font-semibold">
-                          {formatCurrencyWithSymbol(pensionData.totalContributions, selectedCurrency)}
+                          {formatCurrencyWithSymbol(
+                            pensionData.totalContributions,
+                            selectedCurrency
+                          )}
                         </span>
                       </div>
                       <div className="flex justify-between">
@@ -288,7 +302,7 @@ const PensionPage = () => {
                   </h3>
                   <p className="text-[#a0a0a0]">
                     {isEmpty ||
-                      pensionData.subscriptionStatus === "Not Subscribed"
+                    pensionData.subscriptionStatus === "Not Subscribed"
                       ? "Subscribe to a pension plan to start making contributions."
                       : "You haven't made any contributions yet. Make your first contribution to get started."}
                   </p>
@@ -343,7 +357,7 @@ const PensionPage = () => {
 
                       <button className="w-full bg-[#6a0dad] hover:bg-[#8a2dd3] text-white py-3 rounded-lg transition-colors duration-200">
                         {isEmpty ||
-                          pensionData.subscriptionStatus === "Not Subscribed"
+                        pensionData.subscriptionStatus === "Not Subscribed"
                           ? "Get Projection Estimate"
                           : "Calculate Projections"}
                       </button>
@@ -356,7 +370,7 @@ const PensionPage = () => {
                     </h2>
 
                     {isEmpty ||
-                      pensionData.subscriptionStatus === "Not Subscribed" ? (
+                    pensionData.subscriptionStatus === "Not Subscribed" ? (
                       <div className="text-center py-8">
                         <FontAwesomeIcon
                           icon={faChartLine}

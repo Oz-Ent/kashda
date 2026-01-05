@@ -1,27 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDataState } from "@/hooks/useDataState";
+import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
+import { formatCurrency } from "@/lib/formatUtils";
+import { useStaticRedirect } from "@/lib/staticRedirect";
 import {
-  faPaperPlane,
-  faHandHoldingUsd,
-  faPlusCircle,
-  faMoneyBillWave,
   faBriefcase,
-  faShieldAlt,
+  faExclamationTriangle,
   faFileInvoiceDollar,
   faFilter,
-  faExclamationTriangle,
+  faHandHoldingUsd,
+  faMoneyBillWave,
+  faPaperPlane,
+  faPlusCircle,
+  faShieldAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import { useStaticRedirect } from "@/lib/staticRedirect";
-import { useDataState } from "@/hooks/useDataState";
-import { formatCurrency } from "@/lib/formatUtils";
-import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
+import ProtectedRoute from "../components/auth/ProtectedRoute";
 import AppLayout from "../components/common/AppLayout";
 import BalanceCarousel from "../components/ui/BalanceCarousel";
 import CurrencySelector from "../components/ui/CurrencySelector";
 import { CardSkeleton, TableSkeleton } from "../components/ui/LoadingSkeleton";
-import ProtectedRoute from "../components/auth/ProtectedRoute";
 
 const DashboardPage = () => {
   const { redirect } = useStaticRedirect();
@@ -51,7 +51,10 @@ const DashboardPage = () => {
   };
 
   const formatAmount = (amount: number) => {
-    const formatted = formatCurrencyWithSymbol(Math.abs(amount), selectedCurrency);
+    const formatted = formatCurrencyWithSymbol(
+      Math.abs(amount),
+      selectedCurrency
+    );
     return amount >= 0 ? `+ ${formatted}` : `- ${formatted}`;
   };
 
@@ -135,7 +138,7 @@ const DashboardPage = () => {
                   />
                 </div>
                 {isEmpty ||
-                  pensionData.subscriptionStatus === "Not Subscribed" ? (
+                pensionData.subscriptionStatus === "Not Subscribed" ? (
                   <div className="text-center py-4">
                     <FontAwesomeIcon
                       icon={faExclamationTriangle}
@@ -198,7 +201,8 @@ const DashboardPage = () => {
                       className="text-3xl text-[#6a0dad] mb-2"
                     />
                     <p className="text-sm text-[#a0a0a0] mb-4">
-                      No active insurance plans. Protect yourself and your family.
+                      No active insurance plans. Protect yourself and your
+                      family.
                     </p>
                     <button
                       onClick={() => redirect("/insurance")}
@@ -238,8 +242,8 @@ const DashboardPage = () => {
                 <h2 className="text-xl font-medium mb-4 text-[#e0e0e0]">
                   Recent Transactions
                 </h2>
-                <div className="flex justify-between items-center mb-4">
-                  <div className="flex space-x-2">
+                <div className="flex flex-wrap justify-between gap-1.5 sm:gap-0 items-center mb-4">
+                  <div className="flex  space-x-2">
                     <button className="bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] hover:bg-[#6a0dad] px-4 py-2 rounded-lg text-sm transition-colors duration-200">
                       All
                     </button>
@@ -324,10 +328,11 @@ const DashboardPage = () => {
                               {transaction.category}
                             </td>
                             <td
-                              className={`py-3 px-4 text-sm whitespace-nowrap ${transaction.amount >= 0
-                                ? "text-green-500"
-                                : "text-red-400"
-                                }`}
+                              className={`py-3 px-4 text-sm whitespace-nowrap ${
+                                transaction.amount >= 0
+                                  ? "text-green-500"
+                                  : "text-red-400"
+                              }`}
                             >
                               {formatAmount(transaction.amount)}
                             </td>

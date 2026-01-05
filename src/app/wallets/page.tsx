@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWallet, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useDataState } from "@/hooks/useDataState";
 import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
+import { faPlus, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import ProtectedRoute from "../components/auth/ProtectedRoute";
 import AppLayout from "../components/common/AppLayout";
 import BalanceCarousel from "../components/ui/BalanceCarousel";
 import CurrencySelector from "../components/ui/CurrencySelector";
 import { CardSkeleton } from "../components/ui/LoadingSkeleton";
-import ProtectedRoute from "../components/auth/ProtectedRoute";
 
 const WalletsPage = () => {
   const { isLoading, isEmpty, data } = useDataState({
@@ -105,7 +105,10 @@ const WalletsPage = () => {
                     <div className="flex justify-between">
                       <span className="text-[#a0a0a0]">Balance:</span>
                       <span className="text-[#e0e0e0] font-semibold">
-                        {formatCurrencyWithSymbol(wallet.balance, selectedCurrency)}
+                        {formatCurrencyWithSymbol(
+                          wallet.balance,
+                          selectedCurrency
+                        )}
                       </span>
                     </div>
 
@@ -127,7 +130,7 @@ const WalletsPage = () => {
                   </div>
 
                   <div className="mt-4 pt-4 border-t border-[#4a007a]">
-                    <div className="flex space-x-2">
+                    <div className="flex flex-wrap gap-y-1.5  space-x-2">
                       {wallet.id === "main" && !isEmpty && (
                         <>
                           <button className="flex-1 bg-[#4a007a] hover:bg-[#6a0dad] text-[#e0e0e0] py-2 px-3 rounded-lg text-sm transition-colors duration-200">

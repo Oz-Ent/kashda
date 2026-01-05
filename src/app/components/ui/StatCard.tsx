@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
 
 interface StatCardProps {
   title: string;
@@ -22,15 +22,26 @@ const StatCard: React.FC<StatCardProps> = ({
   subtitle,
 }) => {
   return (
-    <div className="bg-[#3a005f] border border-[#4a007a] p-6 rounded-xl shadow-lg">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-[#e0e0e0]">{title}</h3>
-        <FontAwesomeIcon icon={icon} className={`${iconColor} text-xl`} />
+    <div className="bg-[#3a005f] border border-[#4a007a] p-4 md:p-6 rounded-xl shadow-lg">
+      <div className="flex items-center justify-between mb-2 md:mb-4">
+        <h3 className="text-sm md:text-lg font-semibold text-[#e0e0e0]">
+          {title}
+        </h3>
+        <FontAwesomeIcon
+          icon={icon}
+          className={`${iconColor} text-lg md:text-xl`}
+        />
       </div>
-      <p className={`text-3xl font-bold ${valueColor}`}>
-        {typeof value === "number" && value.toLocaleString ? value.toLocaleString() : value}
+      <p className={`text-2xl md:text-3xl font-bold ${valueColor}`}>
+        {typeof value === "number" && value.toLocaleString
+          ? value.toLocaleString()
+          : value}
       </p>
-      {subtitle && <p className="text-sm text-[#a0a0a0] mt-2">{subtitle}</p>}
+      {subtitle && (
+        <p className="text-xs md:text-sm text-[#a0a0a0] mt-1 md:mt-2">
+          {subtitle}
+        </p>
+      )}
     </div>
   );
 };
@@ -41,7 +52,7 @@ interface StatCardGridProps {
 
 export const StatCardGrid: React.FC<StatCardGridProps> = ({ cards }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
       {cards.map((card, index) => (
         <StatCard key={index} {...card} />
       ))}

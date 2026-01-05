@@ -1,23 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDataState } from "@/hooks/useDataState";
+import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
 import {
-  faPaperPlane,
-  faHandHoldingUsd,
-  faPlusCircle,
-  faMoneyBillWave,
   faFilter,
+  faHandHoldingUsd,
+  faMoneyBillWave,
+  faPaperPlane,
+  faPlusCircle,
   faReceipt,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDataState } from "@/hooks/useDataState";
-import { formatCurrency } from "@/lib/formatUtils";
-import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
+import { useState } from "react";
+import ProtectedRoute from "../components/auth/ProtectedRoute";
 import AppLayout from "../components/common/AppLayout";
 import CurrencySelector from "../components/ui/CurrencySelector";
 import { CardSkeleton, TableSkeleton } from "../components/ui/LoadingSkeleton";
-import ProtectedRoute from "../components/auth/ProtectedRoute";
 
 type FilterType = "all" | "income" | "expenses";
 
@@ -38,7 +37,10 @@ const TransactionsPage = () => {
   const transactions = getFilteredTransactions();
 
   const formatAmount = (amount: number) => {
-    const formatted = formatCurrencyWithSymbol(Math.abs(amount), selectedCurrency);
+    const formatted = formatCurrencyWithSymbol(
+      Math.abs(amount),
+      selectedCurrency
+    );
     return amount >= 0 ? `+ ${formatted}` : `- ${formatted}`;
   };
 
@@ -54,61 +56,63 @@ const TransactionsPage = () => {
   return (
     <ProtectedRoute>
       <AppLayout>
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
+        <div className="space-y-4 md:space-y-6">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-[#e0e0e0] mb-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#e0e0e0] mb-1 md:mb-2">
                 Transactions
               </h1>
-              <p className="text-[#a0a0a0]">
+              <p className="text-xs md:text-sm text-[#a0a0a0]">
                 Manage your money transfers and view transaction history
               </p>
             </div>
-            <CurrencySelector
-              selectedCurrency={selectedCurrency}
-              onCurrencyChange={setSelectedCurrency}
-            />
+            <div className="w-full md:w-auto">
+              <CurrencySelector
+                selectedCurrency={selectedCurrency}
+                onCurrencyChange={setSelectedCurrency}
+              />
+            </div>
           </div>
 
           {/* Quick Actions - Top Row Format */}
-          <div className="bg-[#3a005f] border border-[#4a007a] p-6 rounded-xl shadow-lg">
-            <h2 className="text-xl font-medium text-[#e0e0e0] mb-4">
+          <div className="bg-[#3a005f] border border-[#4a007a] p-4 md:p-6 rounded-xl shadow-lg">
+            <h2 className="text-lg md:text-xl font-medium text-[#e0e0e0] mb-3 md:mb-4">
               Quick Actions
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
               <Link
                 href="/transactions/send"
-                className="bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] hover:bg-[#6a0dad] p-4 rounded-xl flex flex-col items-center justify-center text-center shadow-md focus:outline-none transition-colors duration-200"
+                className="bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] hover:bg-[#6a0dad] p-3 md:p-4 rounded-lg md:rounded-xl flex flex-col items-center justify-center text-center shadow-md focus:outline-none transition-colors duration-200"
               >
                 <FontAwesomeIcon
                   icon={faPaperPlane}
-                  className="text-2xl mb-2 text-white"
+                  className="text-lg md:text-2xl mb-2 text-white"
                 />
-                <span className="text-sm font-medium">Send</span>
+                <span className="text-xs md:text-sm font-medium">Send</span>
               </Link>
               <Link
                 href="/transactions/receive"
-                className="bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] hover:bg-[#6a0dad] p-4 rounded-xl flex flex-col items-center justify-center text-center shadow-md focus:outline-none transition-colors duration-200"
+                className="bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] hover:bg-[#6a0dad] p-3 md:p-4 rounded-lg md:rounded-xl flex flex-col items-center justify-center text-center shadow-md focus:outline-none transition-colors duration-200"
               >
                 <FontAwesomeIcon
                   icon={faHandHoldingUsd}
-                  className="text-2xl mb-2 text-white"
+                  className="text-lg md:text-2xl mb-2 text-white"
                 />
-                <span className="text-sm font-medium">Receive</span>
+                <span className="text-xs md:text-sm font-medium">Receive</span>
               </Link>
-              <button className="bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] hover:bg-[#6a0dad] p-4 rounded-xl flex flex-col items-center justify-center text-center shadow-md focus:outline-none transition-colors duration-200">
+              <button className="bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] hover:bg-[#6a0dad] p-3 md:p-4 rounded-lg md:rounded-xl flex flex-col items-center justify-center text-center shadow-md focus:outline-none transition-colors duration-200">
                 <FontAwesomeIcon
                   icon={faPlusCircle}
-                  className="text-2xl mb-2 text-white"
+                  className="text-lg md:text-2xl mb-2 text-white"
                 />
-                <span className="text-sm font-medium">Top Up</span>
+                <span className="text-xs md:text-sm font-medium">Top Up</span>
               </button>
-              <button className="bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] hover:bg-[#6a0dad] p-4 rounded-xl flex flex-col items-center justify-center text-center shadow-md focus:outline-none transition-colors duration-200">
+              <button className="bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] hover:bg-[#6a0dad] p-3 md:p-4 rounded-lg md:rounded-xl flex flex-col items-center justify-center text-center shadow-md focus:outline-none transition-colors duration-200">
                 <FontAwesomeIcon
                   icon={faMoneyBillWave}
-                  className="text-2xl mb-2 text-white"
+                  className="text-lg md:text-2xl mb-2 text-white"
                 />
-                <span className="text-sm font-medium">Withdraw</span>
+                <span className="text-xs md:text-sm font-medium">Withdraw</span>
               </button>
             </div>
           </div>
@@ -127,12 +131,12 @@ const TransactionsPage = () => {
               </div>
             </CardSkeleton>
           ) : (
-            <div className="bg-[#3a005f] border border-[#4a007a] p-6 rounded-xl shadow-lg">
-              <h2 className="text-xl font-medium mb-4 text-[#e0e0e0]">
+            <div className="bg-[#3a005f] border border-[#4a007a] p-4 md:p-6 rounded-xl shadow-lg">
+              <h2 className="text-lg md:text-xl font-medium mb-3 md:mb-4 text-[#e0e0e0]">
                 Transaction History
               </h2>
-              <div className="flex justify-between items-center mb-4">
-                <div className="flex space-x-2">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3 md:gap-4 mb-4">
+                <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => setFilter("all")}
                     className={getFilterButtonClass("all")}
@@ -152,41 +156,42 @@ const TransactionsPage = () => {
                     Expenses
                   </button>
                 </div>
-                <button className="bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] hover:bg-[#6a0dad] px-4 py-2 rounded-lg text-sm transition-colors duration-200">
+                <button className="w-full md:w-auto bg-[#4a007a] border border-[#4a007a] text-[#e0e0e0] hover:bg-[#6a0dad] px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm transition-colors duration-200">
                   <FontAwesomeIcon icon={faFilter} className="mr-2" />
                   Filter
                 </button>
               </div>
 
               {isEmpty || transactions.length === 0 ? (
-                <div className="text-center py-12">
+                <div className="text-center py-8 md:py-12">
                   <FontAwesomeIcon
                     icon={faReceipt}
-                    className="text-6xl text-[#6a0dad] mb-4"
+                    className="text-4xl md:text-6xl text-[#6a0dad] mb-3 md:mb-4"
                   />
-                  <h3 className="text-xl font-semibold text-[#e0e0e0] mb-2">
+                  <h3 className="text-lg md:text-xl font-semibold text-[#e0e0e0] mb-2">
                     {isEmpty
                       ? "No Transactions Yet"
                       : `No ${filter} transactions found`}
                   </h3>
-                  <p className="text-[#a0a0a0] mb-6">
+                  <p className="text-xs md:text-sm text-[#a0a0a0] mb-4 md:mb-6">
                     {isEmpty
                       ? "Start using your wallet to see transaction history here."
-                      : `No transactions found for the ${filter === "all" ? "selected" : filter
-                      } filter.`}
+                      : `No transactions found for the ${
+                          filter === "all" ? "selected" : filter
+                        } filter.`}
                   </p>
                   {isEmpty && (
-                    <div className="flex justify-center space-x-4">
+                    <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-4">
                       <Link
                         href="/transactions/send"
-                        className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-6 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2"
+                        className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 md:px-6 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 text-sm md:text-base"
                       >
                         <FontAwesomeIcon icon={faPaperPlane} />
                         <span>Send Money</span>
                       </Link>
                       <Link
                         href="/transactions/receive"
-                        className="bg-[#4a007a] hover:bg-[#6a0dad] text-[#e0e0e0] px-6 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2"
+                        className="bg-[#4a007a] hover:bg-[#6a0dad] text-[#e0e0e0] px-4 md:px-6 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 text-sm md:text-base"
                       >
                         <FontAwesomeIcon icon={faHandHoldingUsd} />
                         <span>Receive Money</span>
@@ -195,26 +200,68 @@ const TransactionsPage = () => {
                   )}
                 </div>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="min-w-full text-left text-[#e0e0e0]">
+                <div className="space-y-3 md:overflow-x-auto">
+                  {/* Mobile Card View */}
+                  <div className="md:hidden space-y-3">
+                    {transactions.map((transaction) => (
+                      <div
+                        key={transaction.id}
+                        className="bg-[#2a004a] border border-[#4a007a] rounded-lg p-3 space-y-2"
+                      >
+                        <div className="flex justify-between items-start mb-2">
+                          <div className="flex-1">
+                            <p className="text-xs text-[#a0a0a0] mb-1">
+                              {transaction.date}
+                            </p>
+                            <p className="text-sm font-medium text-[#e0e0e0]">
+                              {transaction.description}
+                            </p>
+                          </div>
+                          <span
+                            className={`font-semibold whitespace-nowrap ml-2 text-sm ${
+                              transaction.amount >= 0
+                                ? "text-green-500"
+                                : "text-red-400"
+                            }`}
+                          >
+                            {formatAmount(transaction.amount)}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-[#a0a0a0]">
+                            {transaction.category}
+                          </span>
+                          <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded-full">
+                            {transaction.status}
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#a0a0a0] border-t border-[#4a007a] pt-2 mt-2">
+                          Ref: {transaction.reference}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Desktop Table View */}
+                  <table className="hidden md:table min-w-full text-left text-[#e0e0e0]">
                     <thead>
                       <tr className="border-b border-gray-700">
-                        <th className="py-2 px-4 text-sm font-semibold text-[#a0a0a0]">
+                        <th className="py-2 px-4 text-xs md:text-sm font-semibold text-[#a0a0a0]">
                           Date
                         </th>
-                        <th className="py-2 px-4 text-sm font-semibold text-[#a0a0a0]">
+                        <th className="py-2 px-4 text-xs md:text-sm font-semibold text-[#a0a0a0]">
                           Description
                         </th>
-                        <th className="py-2 px-4 text-sm font-semibold text-[#a0a0a0]">
+                        <th className="py-2 px-4 text-xs md:text-sm font-semibold text-[#a0a0a0]">
                           Category
                         </th>
-                        <th className="py-2 px-4 text-sm font-semibold text-[#a0a0a0]">
+                        <th className="py-2 px-4 text-xs md:text-sm font-semibold text-[#a0a0a0]">
                           Amount
                         </th>
-                        <th className="py-2 px-4 text-sm font-semibold text-[#a0a0a0]">
+                        <th className="py-2 px-4 text-xs md:text-sm font-semibold text-[#a0a0a0]">
                           Status
                         </th>
-                        <th className="py-2 px-4 text-sm font-semibold text-[#a0a0a0]">
+                        <th className="py-2 px-4 text-xs md:text-sm font-semibold text-[#a0a0a0]">
                           Reference
                         </th>
                       </tr>
@@ -235,10 +282,11 @@ const TransactionsPage = () => {
                             {transaction.category}
                           </td>
                           <td
-                            className={`py-3 px-4 text-sm font-semibold whitespace-nowrap  ${transaction.amount >= 0
-                              ? "text-green-500"
-                              : "text-red-400"
-                              }`}
+                            className={`py-3 px-4 text-sm font-semibold whitespace-nowrap  ${
+                              transaction.amount >= 0
+                                ? "text-green-500"
+                                : "text-red-400"
+                            }`}
                           >
                             {formatAmount(transaction.amount)}
                           </td>

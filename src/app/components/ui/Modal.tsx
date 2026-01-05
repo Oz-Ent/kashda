@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -32,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         >
           <FontAwesomeIcon icon={faTimes} className="text-sm" />
         </button>
-        {children}
+        <div className="max-h-[90vh] overflow-y-auto">{children}</div>
       </div>
     </div>
   );

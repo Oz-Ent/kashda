@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDataState } from "@/hooks/useDataState";
+import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
+import { getRemainingDays } from "@/lib/formatUtils";
 import {
   faCalendarAlt,
   faEdit,
@@ -9,51 +10,85 @@ import {
   faPiggyBank,
   faPlus,
   faThLarge,
-  faTimes,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { formatCurrency, getRemainingDays } from "@/lib/formatUtils";
-import { formatCurrencyWithSymbol } from "@/lib/currencyUtils";
-import { useDataState } from "@/hooks/useDataState";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import ProtectedRoute from "../components/auth/ProtectedRoute";
 import AppLayout from "../components/common/AppLayout";
-import { StatCardGrid } from "../components/ui/StatCard";
-import ProgressBar from "../components/ui/ProgressBar";
+import NewSavingsForm from "../components/forms/NewSavingsForm";
 import CurrencySelector from "../components/ui/CurrencySelector";
 import {
-  StatCardSkeleton,
   CardSkeleton,
   ProgressSkeleton,
+  StatCardSkeleton,
 } from "../components/ui/LoadingSkeleton";
-import ProtectedRoute from "../components/auth/ProtectedRoute";
-import NewSavingsForm from "../components/forms/NewSavingsForm";
+import ProgressBar from "../components/ui/ProgressBar";
+import { StatCardGrid } from "../components/ui/StatCard";
 
 const SavingsPage = () => {
   const { isLoading, isEmpty, data } = useDataState();
   const [newSavingsForm, setNewSavingsForm] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const savingsData = data.savings;
-  const [selectedGoal, setSelectedGoal] = useState(
-    savingsData.goals[0] || null
-  );
+  // Local state for goals - starts with data from JSON, can be appended to
+  // Initialize from savingsData - will use emptyData initially, then appData loads
+  const [goals, setGoals] = useState(() => {
+    const initialGoals = savingsData?.goals || [];
+    return initialGoals;
+  });
+  const [selectedGoal, setSelectedGoal] = useState(() => {
+    const initialGoals = savingsData?.goals || [];
+    return initialGoals.length > 0 ? initialGoals[0] : null;
+  });
+
+  // Initialize goals when data loads (only once when data becomes available)
+  useEffect(() => {
+    if (
+      !isLoading &&
+      !isEmpty &&
+      savingsData?.goals &&
+      savingsData.goals.length > 0
+    ) {
+      // Only initialize if goals is empty (data wasn't available on first render)
+      setGoals((prevGoals) => {
+        if (prevGoals.length === 0) {
+          console.log(
+            "Initializing goals from loaded data:",
+            savingsData.goals
+          );
+          return savingsData.goals;
+        }
+        // Don't reset if user has already added goals
+        return prevGoals;
+      });
+    }
+  }, [isLoading, isEmpty, savingsData?.goals]);
 
   const statCards = [
     {
       title: "Total Savings",
-      value: formatCurrencyWithSymbol(savingsData.totalSavings, selectedCurrency),
+      value: formatCurrencyWithSymbol(
+        savingsData.totalSavings,
+        selectedCurrency
+      ),
       icon: faPiggyBank,
       iconColor: "text-[#d4af37]",
       valueColor: "text-[#d4af37]",
     },
     {
       title: "Monthly Contribution",
-      value: formatCurrencyWithSymbol(savingsData.monthlyContribution, selectedCurrency),
+      value: formatCurrencyWithSymbol(
+        savingsData.monthlyContribution,
+        selectedCurrency
+      ),
       icon: faMoneyBillWave,
       iconColor: "text-[#6a0dad]",
       valueColor: "text-[#6a0dad]",
     },
     {
       title: "Active Goals",
-      value: savingsData.goals.length,
+      value: goals.length,
       icon: faThLarge,
       iconColor: "text-[#a78bfa]",
       valueColor: "text-[#a78bfa]",
@@ -62,27 +97,55 @@ const SavingsPage = () => {
 
   const handleNewSavingsForm = () => {
     setNewSavingsForm(true);
-  }
+  };
+
+  const handleCreatePlan = (newGoal: {
+    id: string;
+    name: string;
+    targetAmount: number;
+    currentAmount: number;
+    targetDate: string;
+    category: string;
+  }) => {
+    console.log("handleCreatePlan called with:", newGoal);
+    console.log("Current goals:", goals);
+
+    // Append the new goal to the local state
+    const updatedGoals = [...goals, newGoal];
+    console.log("Updated goals:", updatedGoals);
+    setGoals(updatedGoals);
+
+    // Select the newly created goal
+    setSelectedGoal(newGoal);
+
+    // Close the form
+    setNewSavingsForm(false);
+  };
 
   return (
     <ProtectedRoute>
       <AppLayout>
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
+        <div className="space-y-4 md:space-y-6">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-[#e0e0e0] mb-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-[#e0e0e0] mb-1 md:mb-2">
                 Savings Goals
               </h1>
-              <p className="text-[#a0a0a0]">
+              <p className="text-xs md:text-sm text-[#a0a0a0]">
                 Track and manage your savings goals
               </p>
             </div>
-            <div className="flex items-center space-x-4">
-              <CurrencySelector
-                selectedCurrency={selectedCurrency}
-                onCurrencyChange={setSelectedCurrency}
-              />
-              <button onClick={handleNewSavingsForm} className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors duration-200 cursor-pointer">
+            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 w-full md:w-auto">
+              <div className="w-full md:w-auto">
+                <CurrencySelector
+                  selectedCurrency={selectedCurrency}
+                  onCurrencyChange={setSelectedCurrency}
+                />
+              </div>
+              <button
+                onClick={handleNewSavingsForm}
+                className="w-full md:w-auto bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-4 py-2 rounded-lg flex items-center justify-center md:justify-start space-x-2 transition-colors duration-200 cursor-pointer text-sm md:text-base"
+              >
                 <FontAwesomeIcon icon={faPlus} />
                 <span>New Goal</span>
               </button>
@@ -95,18 +158,19 @@ const SavingsPage = () => {
               {/* Backdrop with blur effect */}
               <div
                 className="absolute inset-0 bg-black/50 backdrop-blur-xs h-screen"
-              // onClick={() => setNewSavingsForm(false)}
+                // onClick={() => setNewSavingsForm(false)}
               />
 
               {/* Modal content */}
               <div className="relative bg-[#3a005f] border border-[#4a007a] p-6 rounded-xl shadow-2xl max-w-lg w-full mx-4">
-
                 {/* Form content will go here */}
-                <NewSavingsForm onClose={() => setNewSavingsForm(false)} />
+                <NewSavingsForm
+                  onClose={() => setNewSavingsForm(false)}
+                  onCreatePlan={handleCreatePlan}
+                />
               </div>
             </div>
           )}
-
 
           {/* Savings Overview */}
           {isLoading ? (
@@ -133,7 +197,7 @@ const SavingsPage = () => {
                   <CardSkeleton />
                   <CardSkeleton />
                 </>
-              ) : isEmpty || savingsData.goals.length === 0 ? (
+              ) : isEmpty || goals.length === 0 ? (
                 // Empty state for goals
                 <div className="bg-[#3a005f] border border-[#4a007a] p-8 rounded-xl text-center">
                   <FontAwesomeIcon
@@ -147,19 +211,23 @@ const SavingsPage = () => {
                     Start building your financial future by creating your first
                     savings goal.
                   </p>
-                  <button onClick={handleNewSavingsForm} className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-6 py-2 rounded-lg transition-colors duration-200 cursor-pointer">
+                  <button
+                    onClick={handleNewSavingsForm}
+                    className="bg-[#6a0dad] hover:bg-[#8a2dd3] text-white px-6 py-2 rounded-lg transition-colors duration-200 cursor-pointer"
+                  >
                     Create Your First Goal
                   </button>
                 </div>
               ) : (
                 // Regular goals list
-                savingsData.goals.map((goal) => (
+                goals.map((goal) => (
                   <div
                     key={goal.id}
-                    className={`bg-[#3a005f] border p-4 rounded-xl cursor-pointer transition-colors duration-200 ${selectedGoal && selectedGoal.id === goal.id
-                      ? "border-[#6a0dad] bg-[#6a0dad]/10"
-                      : "border-[#4a007a] hover:border-[#6a0dad]"
-                      }`}
+                    className={`bg-[#3a005f] border p-4 rounded-xl cursor-pointer transition-colors duration-200 ${
+                      selectedGoal && selectedGoal.id === goal.id
+                        ? "border-[#6a0dad] bg-[#6a0dad]/10"
+                        : "border-[#4a007a] hover:border-[#6a0dad]"
+                    }`}
                     onClick={() => setSelectedGoal(goal)}
                   >
                     <div className="flex justify-between items-start mb-3">
@@ -233,7 +301,7 @@ const SavingsPage = () => {
                     No Goal Selected
                   </h3>
                   <p className="text-[#a0a0a0]">
-                    {isEmpty || savingsData.goals.length === 0
+                    {isEmpty || goals.length === 0
                       ? "Create your first savings goal to see details here."
                       : "Select a goal from the list to view its details."}
                   </p>
@@ -256,7 +324,10 @@ const SavingsPage = () => {
                         Current Amount
                       </p>
                       <p className="text-xl font-bold text-[#6a0dad]">
-                        {formatCurrencyWithSymbol(selectedGoal.currentAmount, selectedCurrency)}
+                        {formatCurrencyWithSymbol(
+                          selectedGoal.currentAmount,
+                          selectedCurrency
+                        )}
                       </p>
                     </div>
                     <div className="bg-[#2a004a] p-4 rounded-lg">
@@ -264,7 +335,10 @@ const SavingsPage = () => {
                         Target Amount
                       </p>
                       <p className="text-xl font-bold text-[#d4af37]">
-                        {formatCurrencyWithSymbol(selectedGoal.targetAmount, selectedCurrency)}
+                        {formatCurrencyWithSymbol(
+                          selectedGoal.targetAmount,
+                          selectedCurrency
+                        )}
                       </p>
                     </div>
                   </div>
